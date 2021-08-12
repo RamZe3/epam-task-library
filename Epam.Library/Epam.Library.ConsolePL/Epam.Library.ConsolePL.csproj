@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Library.Entities\Epam.Library.Entities.csproj">
+      <Project>{20E49E45-EF38-4F84-9560-072AB99291C3}</Project>
+      <Name>Epam.Library.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
