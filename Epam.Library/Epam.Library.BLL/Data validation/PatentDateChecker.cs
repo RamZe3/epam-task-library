@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.BLL.Data_validation
 {
-    class PatentDateChecker
+    public class PatentDateChecker : GeneralDateChecker
     {
     }
 }

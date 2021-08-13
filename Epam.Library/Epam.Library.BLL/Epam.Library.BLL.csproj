@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GeneralDateChecker.cs" />
+    <Compile Include="Data validation\BookDateChecker.cs" />
+    <Compile Include="Data validation\GeneralDateChecker.cs" />
+    <Compile Include="Data validation\PaperDateChecker.cs" />
+    <Compile Include="Data validation\PatentDateChecker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

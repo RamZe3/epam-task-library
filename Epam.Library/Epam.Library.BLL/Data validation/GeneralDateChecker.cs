@@ -11,17 +11,32 @@ namespace Epam.Library.BLL
     {
         public bool IsNameCorrect(string name)
         {
-            return true;
+            throw new NotImplementedException();
         }
 
         public bool IsAuthorCorrect(Author author)
         {
-            return true;
+            throw new NotImplementedException();
         }
 
         public bool IsNoteCorrect(string note)
         {
-            return true;
+            throw new NotImplementedException();
+        }
+
+        public bool IsPublisherCorrect(string publisher)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsPlaceOfPublicationCorrect(string placeOfPublication)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsNumberOfPagesCorrect(int numberOfPages)
+        {
+            throw new NotImplementedException();
         }
     }
 }
