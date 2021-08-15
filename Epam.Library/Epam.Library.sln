@@ -49,6 +49,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Library.BLL.Interfaces
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Library.DAL.Interfaces", "Epam.Library.DAL.Interfaces\Epam.Library.DAL.Interfaces.csproj", "{CE75CC28-C292-4F68-8D91-A0BC56ECF9FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Library.RAMMemoryDAL", "Epam.Library.RAMMemoryDAL\Epam.Library.RAMMemoryDAL.csproj", "{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{CE75CC28-C292-4F68-8D91-A0BC56ECF9FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CE75CC28-C292-4F68-8D91-A0BC56ECF9FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CE75CC28-C292-4F68-8D91-A0BC56ECF9FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -99,6 +105,7 @@ Global
 		{A2A92153-A2CA-40E8-8184-F0EE051C1B7A} = {FFBA0D0F-8B6A-406C-9931-45FA67BE4757}
 		{F553C504-15FE-4982-A091-23225F98D853} = {F8285E6C-DE32-41B1-ACE6-054067FCB0F0}
 		{CE75CC28-C292-4F68-8D91-A0BC56ECF9FD} = {AB2A4479-AC97-48E4-B64C-057C316891A1}
+		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA} = {AB2A4479-AC97-48E4-B64C-057C316891A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C84C5C8A-AF48-4CF3-8A53-3C855F2629E8}

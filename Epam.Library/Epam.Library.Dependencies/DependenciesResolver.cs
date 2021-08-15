@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Epam.Library.BLL;
+using Epam.Library.BLL.Interfaces;
+using Epam.Library.DAL.Interfaces;
+using Epam.Library.RAMMemoryDAL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +10,24 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.Dependencies
 {
-    class DependenciesResolver
+    public class DependenciesResolver
     {
+        private static DependenciesResolver _instance;
+        public static DependenciesResolver Instance
+        {
+            get
+            {
+                if (_instance is null)
+                {
+                    _instance = new DependenciesResolver();
+                }
+
+                return _instance;
+            }
+        }
+
+        public IInformationResourceDAL InformationResourceDAL => new RAMMemory();
+
+        public IInformationResourceLogic InformationResourceLogic => new InformationResourceLogic(InformationResourceDAL);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Epam.Library.DAL.Interfaces;
+using Epam.Library.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +10,37 @@ namespace Epam.Library.RAMMemoryDAL
 {
     public class RAMMemory : IInformationResourceDAL
     {
-        public void AddBook(Library.Entities.Book book)
+        public static List<InformationResource> Library = new List<InformationResource>();
+        public void AddBook(Book book)
         {
-            throw new NotImplementedException();
+            Library.Add(book);
         }
 
-        public void AddPaper(Library.Entities.Paper paper)
+        public void AddPaper(Paper paper)
         {
-            throw new NotImplementedException();
+            Library.Add(paper);
         }
 
-        public void AddPatent(Library.Entities.Patent patent)
+        public void AddPatent(Patent patent)
         {
-            throw new NotImplementedException();
+            Library.Add(patent);
         }
 
         public void DeleteResource(Guid id)
         {
-            throw new NotImplementedException();
+            foreach (var resource in Library)
+            {
+                if (resource.id == id)
+                {
+                    Library.Remove(resource);
+                    break;
+                }
+            }
         }
 
-        public List<Library.Entities.InformationResource> GetLibrary()
+        public List<InformationResource> GetLibrary()
         {
-            throw new NotImplementedException();
+            return Library;
         }
     }
 }

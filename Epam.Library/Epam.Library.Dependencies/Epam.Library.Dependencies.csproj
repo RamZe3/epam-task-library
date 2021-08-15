@@ -44,5 +44,27 @@
     <Compile Include="DependenciesResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Library.BLL.Interfaces\Epam.Library.BLL.Interfaces.csproj">
+      <Project>{f553c504-15fe-4982-a091-23225f98d853}</Project>
+      <Name>Epam.Library.BLL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.BLL\Epam.Library.BLL.csproj">
+      <Project>{0a95235f-06d1-44d8-9fb4-847bcdefd13b}</Project>
+      <Name>Epam.Library.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.DAL.Interfaces\Epam.Library.DAL.Interfaces.csproj">
+      <Project>{ce75cc28-c292-4f68-8d91-a0bc56ecf9fd}</Project>
+      <Name>Epam.Library.DAL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.DAL\Epam.Library.DAL.csproj">
+      <Project>{d857d7d5-e95a-4acf-bbfb-48e9d69565ac}</Project>
+      <Name>Epam.Library.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.RAMMemoryDAL\Epam.Library.RAMMemoryDAL.csproj">
+      <Project>{ebbbd5c3-8bb9-4972-8b0a-350c27ffecaa}</Project>
+      <Name>Epam.Library.RAMMemoryDAL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
