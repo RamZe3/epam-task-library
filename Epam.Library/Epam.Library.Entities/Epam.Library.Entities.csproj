@@ -44,9 +44,18 @@
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="InformationResource.cs" />
+    <Compile Include="Interfaces\IHaveAuthors.cs" />
+    <Compile Include="Interfaces\IHaveYearOfPublication.cs" />
+    <Compile Include="Interfaces\IHaveYearOfPublishing.cs" />
     <Compile Include="Paper.cs" />
     <Compile Include="Patent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Library.Entities.Interfaces\Epam.Library.Entities.Interfaces.csproj">
+      <Project>{4c2f774a-25f6-4de3-b03d-1f40c2eca934}</Project>
+      <Name>Epam.Library.Entities.Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

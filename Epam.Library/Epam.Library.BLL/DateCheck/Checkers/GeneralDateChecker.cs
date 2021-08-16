@@ -6,7 +6,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Epam.Library.BLL
+namespace Epam.Library.BLL.DateCheck
 {
     public class GeneralDateChecker
     {

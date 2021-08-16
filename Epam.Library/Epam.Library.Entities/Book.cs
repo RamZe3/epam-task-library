@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Epam.Library.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace Epam.Library.Entities
 {
 
-    public class Book : InformationResource
+    public class Book : InformationResource, IHaveYearOfPublishing, IHaveAuthors
     {
         public List<Author> authors { get; set; }
         public string placeOfPublication { get; set; }
@@ -28,14 +29,19 @@ namespace Epam.Library.Entities
             ISBN = iSBN;
         }
 
-        public Book(string name, Guid id, string iSBN) : base(id, name)
-        {
-            ISBN = iSBN;
-        }
-
         public override string ToString()
         {
             return name + " " + ISBN;
+        }
+
+        public int GetYearOfPublishing()
+        {
+            return yearOfPublishing;
+        }
+
+        public List<Author> GetAuthors()
+        {
+            return authors;
         }
     }
 }

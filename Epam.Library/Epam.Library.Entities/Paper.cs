@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Epam.Library.Entities.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.Entities
 {
-    public class Paper : InformationResource
+    public class Paper : InformationResource, IHaveYearOfPublishing
     {
         public string placeOfPublication { get; set; }
         public string publisher { get; set; }
@@ -34,6 +35,11 @@ namespace Epam.Library.Entities
         public override string ToString()
         {
             throw new NotImplementedException();
+        }
+
+        public int GetYearOfPublishing()
+        {
+            return yearOfPublishing;
         }
     }
 }

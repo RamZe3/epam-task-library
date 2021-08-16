@@ -17,5 +17,14 @@ namespace Epam.Library.Entities
             this.surname = surname;
         }
 
+        public static bool operator ==(Author author1, Author author2)
+        {
+            return author1.name == author2.name && author1.surname == author2.surname;
+        }
+
+        public static bool operator !=(Author author1, Author author2)
+        {
+            return author1.name != author2.name || author1.surname != author2.surname;
+        }
     }
 }

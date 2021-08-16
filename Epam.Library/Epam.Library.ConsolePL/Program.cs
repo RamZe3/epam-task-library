@@ -16,6 +16,8 @@ namespace Epam.Library.ConsolePL
         {
 
             List<Author> authors = new List<Author>();
+            authors.Add(new Author("Asd", "Qwe"));
+            authors.Add(new Author("Zxc", "Fgh"));
             DependenciesResolver dependenciesResolver = new DependenciesResolver();
             IInformationResourceLogic Logic = dependenciesResolver.InformationResourceLogic;
             Logic.AddBook("ASD", authors, "Qwe", "Qwe", 2000, 12, "a", "ISBN 7-12-12-0");
@@ -24,6 +26,14 @@ namespace Epam.Library.ConsolePL
             {
                 Console.WriteLine(item.name);
             }
+
+            List<Book> books = Logic.FindBooksByAuthor(new Author("Asd", "Qwe"));
+            foreach (var book in books)
+            {
+                Console.WriteLine(book.name);
+            }
+
+            Console.WriteLine(Logic.FindResourceByName("ASD").name);
             Console.ReadKey();
         }
     }
