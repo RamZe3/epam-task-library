@@ -34,8 +34,7 @@ namespace Epam.Library.BLL.DateCheck
         public bool IsISSNCorrect(string ISSN)
         {
             Regex regex = new Regex(@"(^ISSN \d{4}-\d{4}$)");
-            return regex.IsMatch(ISSN);
-            throw new NotImplementedException();
+            return regex.IsMatch(ISSN) || ISSN == "";
         }
     }
 }

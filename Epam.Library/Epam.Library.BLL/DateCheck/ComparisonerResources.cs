@@ -40,7 +40,8 @@ namespace Epam.Library.BLL.DateCheck
         {
             if ((paper1.ISSN != "") && (paper2.ISSN != ""))
             {
-                return paper1.ISSN == paper2.ISSN;
+                return paper1.ISSN == paper2.ISSN &&
+                    paper1.name != paper2.name;
             }
             else
             {

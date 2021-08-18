@@ -29,8 +29,7 @@ namespace Epam.Library.BLL.DateCheck
 
         public bool IsRegistrationNumberCorrect(int registrationNumber)
         {
-            //TODO string
-            if (registrationNumber<=999999999)
+            if (registrationNumber<=999999999 && registrationNumber >= 0)
             {
                 return true;
             }

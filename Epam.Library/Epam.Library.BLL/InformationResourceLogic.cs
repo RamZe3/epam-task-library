@@ -27,11 +27,11 @@ namespace Epam.Library.BLL
         public void AddBook(string name, List<Author> authors, string placeOfPublication, string publisher, int yearOfPublishing, int numberOfPages, string note, string iSBN)
         {
             List<InformationResource> Library = _informationResourceDAL.GetLibrary();
-            Book newBook = new Book(name, new Guid(), authors, placeOfPublication, publisher, yearOfPublishing, numberOfPages, note, iSBN);
+            Book newBook = new Book(name, Guid.NewGuid(), authors, placeOfPublication, publisher, yearOfPublishing, numberOfPages, note, iSBN);
 
             if (!_dataValidator.IsBookCorrect(newBook))
             {
-                throw new Exception("Vadidator Eror");
+                throw new InvalidOperationException("Book Vadidator Exeption");
             }
 
             foreach (var resource in Library)
@@ -41,7 +41,7 @@ namespace Epam.Library.BLL
                     Book book = (Book)resource;
                     if (_comparisonerResources.CompareBooks(newBook, book))
                     {
-                        throw new Exception("Compare Ex");
+                        throw new InvalidOperationException("Book Compare Exeption");
                     }
                 }
             }
@@ -52,10 +52,10 @@ namespace Epam.Library.BLL
         public void AddPaper(string name, string placeOfPublication, string publisher, int yearOfPublishing, int numberOfPages, string note, int number, DateTime date, string iSSN)
         {
             List<InformationResource> Library = _informationResourceDAL.GetLibrary();
-            Paper newPaper = new Paper(name, new Guid(), placeOfPublication, publisher, yearOfPublishing, numberOfPages, note, number, date, iSSN);
+            Paper newPaper = new Paper(name, Guid.NewGuid(), placeOfPublication, publisher, yearOfPublishing, numberOfPages, note, number, date, iSSN);
             if (!_dataValidator.IsPaperCorrect(newPaper))
             {
-                throw new Exception("Vadidator Eror");
+                throw new InvalidOperationException("Paper Vadidator Exeption");
             }
 
             foreach (var resource in Library)
@@ -65,7 +65,7 @@ namespace Epam.Library.BLL
                     Paper paper = (Paper)resource;
                     if (_comparisonerResources.ComparePaper(newPaper, paper))
                     {
-                        throw new Exception("Compare Ex");
+                        throw new InvalidOperationException("Paper Compare Exeption");
                     }
                 }
             }
@@ -76,10 +76,10 @@ namespace Epam.Library.BLL
         public void AddPatent(string name, List<Author> inventors, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note)
         {
             List<InformationResource> Library = _informationResourceDAL.GetLibrary();
-            Patent newPatent = new Patent(name, new Guid(), inventors, country, registrationNumber, dateOfApplication, dateOfPublication, numberOfPages, note);
+            Patent newPatent = new Patent(name, Guid.NewGuid(), inventors, country, registrationNumber, dateOfApplication, dateOfPublication, numberOfPages, note);
             if (!_dataValidator.IsPatentCorrect(newPatent))
             {
-                throw new Exception("Vadidator Eror");
+                throw new InvalidOperationException("Patent Vadidator Exeption");
             }
 
             foreach (var resource in Library)
@@ -89,7 +89,7 @@ namespace Epam.Library.BLL
                     Patent patent = (Patent)resource;
                     if (_comparisonerResources.ComparePatent(newPatent, patent))
                     {
-                        throw new Exception("Compare Ex");
+                        throw new InvalidOperationException("Patent Compare Exeption");
                     }
                 }
             }
@@ -109,7 +109,7 @@ namespace Epam.Library.BLL
                 }
             }
 
-            throw new Exception("Delete Error");
+            throw new InvalidOperationException("Delete Exeption");
         }
 
         public List<Book> FindBooksByAuthor(Author author)
@@ -197,7 +197,7 @@ namespace Epam.Library.BLL
             return _informationResourceDAL.GetLibrary();
         }
 
-        public List<InformationResource> GetSortedLibraryByYearOfPublishing()
+        public List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse)
         {
             List<InformationResource> Library = _informationResourceDAL.GetLibrary();
             IEnumerable<IHaveYearOfPublishing> IHaveYearOfPublishingresources =
@@ -210,18 +210,37 @@ namespace Epam.Library.BLL
                 orderby resource.GetYearOfPublishing() descending
                 select (InformationResource)resource;
 
-            return resources.ToList();
+            List<InformationResource> sortedResources = resources.ToList();
+            if (reverse)
+            {
+                sortedResources.Reverse();
+                return sortedResources;
+            }
+            else
+            {
+                return sortedResources;
+            }
         }
 
         public List<InformationResource> GroupingResourceByYearOfPublication()
         {
             List<InformationResource> Library = _informationResourceDAL.GetLibrary();
-            IEnumerable<InformationResource> resources =
-                (IEnumerable<InformationResource>)(from resource in Library
-                group resource by (resource is IHaveYearOfPublication) into newGroup
-                select newGroup);
+            var resources =
+                from resource in Library
+                group resource by (resource is IHaveYearOfPublication);
 
-            return resources.ToList();
+            List<InformationResource> informationResources = new List<InformationResource>();
+            foreach (var item in resources)
+            {
+                foreach (var resource in item)
+                {
+                    if (item.Key)
+                    {
+                        informationResources.Add(resource);
+                    }
+                }
+            }
+            return informationResources;
         }
 
         public List<Book> SmartBookSearchByPublisher(string str)

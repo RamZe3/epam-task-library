@@ -15,7 +15,7 @@ namespace Epam.Library.BLL.Interfaces
         void DeleteResource(Guid guid);
         List<InformationResource> GetLibrary();
         InformationResource FindResourceByName(string name);
-        List<InformationResource> GetSortedLibraryByYearOfPublishing();
+        List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse);
         List<Book> FindBooksByAuthor(Author author);
         List<Patent> FindPatentsByAuthor(Author author);
         List<InformationResource> FindPatentsAndBooksByAuthor(Author author);
