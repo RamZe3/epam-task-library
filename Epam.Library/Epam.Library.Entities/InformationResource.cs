@@ -8,15 +8,21 @@ namespace Epam.Library.Entities
 {
     public abstract class InformationResource
     {
-        public Guid id { get; set; }
-        public string name { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public int NumberOfPages { get; set; }
+        public string Note { get; set; }
 
         protected InformationResource(Guid id, string name)
         {
-            this.id = id;
-            this.name = name;
+            this.Id = id;
+            this.Name = name;
         }
 
-        public override abstract string ToString();
+        protected InformationResource(string name)
+        {
+            this.Id = Guid.NewGuid();
+            this.Name = name;
+        }
     }
 }

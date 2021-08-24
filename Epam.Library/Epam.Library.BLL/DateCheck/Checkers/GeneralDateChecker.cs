@@ -10,40 +10,40 @@ namespace Epam.Library.BLL.DateCheck
 {
     public class GeneralDateChecker
     {
+        private const int MaxPlaceOfPublicationSize = 300;
+        private const int MaxPublisherSize = 300;
+        private const int MaxNoteSize = 2000;
+        private const int MaxNameSize = 300;
+        private const int MaxAuthorNameSize = 50;
+        private const int MaxAuthorSurnameSize = 200;
         public bool IsNameCorrect(string name)
         {
-            Regex regex = new Regex(@"^[\w\W]{1,300}$");
-            return regex.IsMatch(name);
+            return !String.IsNullOrEmpty(name) && name.Count() <= MaxNameSize;
         }
 
         protected static bool IsAuthorCorrect(Author author)
         {
             Regex nameRegex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z]))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ]))+$)");
-            Regex countNameRegex = new Regex(@"^[\w\W]{1,50}$");
-            Regex surNameRegex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z])|([De,Di,Fon] [A-Z]))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ])|([Де,Ди,Фон] [А-ЯЁ]))+$)");
-            Regex countSurNameRegex = new Regex(@"^[\w\W]{1,200}$");
+            Regex surNameRegex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z])|([a-z] ([a-z]|[A-Z])))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ])|([а-яё] ([а-яё]|[А-ЯЁ])))+$)");
 
-            return nameRegex.IsMatch(author.name) & countNameRegex.IsMatch(author.name) &
-                surNameRegex.IsMatch(author.surname) & countSurNameRegex.IsMatch(author.surname);
+            return nameRegex.IsMatch(author.Name) & (!String.IsNullOrEmpty(author.Name) && author.Name.Count() <= MaxAuthorNameSize) &
+                surNameRegex.IsMatch(author.Surname) & (!String.IsNullOrEmpty(author.Surname) && author.Surname.Count() <= MaxAuthorSurnameSize);
         }
 
         public bool IsNoteCorrect(string note)
         {
-            Regex regex = new Regex(@"^[\w\W]{0,2000}$");
-            return regex.IsMatch(note);
+            return (note != null && note.Count() <= MaxNoteSize);
         }
 
         public bool IsPublisherCorrect(string publisher)
         {
-            Regex regex = new Regex(@"^[\w\W]{1,300}$");
-            return regex.IsMatch(publisher);
+            return !String.IsNullOrEmpty(publisher) && publisher.Count() <= MaxPublisherSize;
         }
 
         public bool IsPlaceOfPublicationCorrect(string placeOfPublication)
         {
             Regex regex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z])|( [A-Za-z]))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ])|( [А-ЯЁа-яё]))+$)");
-            Regex countRegex = new Regex(@"^[\w\W]{1,300}$");
-            return regex.IsMatch(placeOfPublication) && countRegex.IsMatch(placeOfPublication);
+            return regex.IsMatch(placeOfPublication) && (!String.IsNullOrEmpty(placeOfPublication) && placeOfPublication.Count() <= MaxPlaceOfPublicationSize);
         }
 
         public bool IsNumberOfPagesCorrect(int numberOfPages)

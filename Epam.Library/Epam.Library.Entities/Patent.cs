@@ -9,43 +9,47 @@ namespace Epam.Library.Entities
 {
     public class Patent : InformationResource, IHaveYearOfPublishing, IHaveAuthors, IHaveYearOfPublication
     {
-        public List<Author> inventors { get; set; }
-        public string country { get; set; }
-        public int registrationNumber { get; set; }
-        public DateTime dateOfApplication { get; set; }
-        public DateTime dateOfPublication { get; set; }
-        public int numberOfPages { get; set; }
-        public string note { get; set; }
+        public List<Author> Inventors { get; set; } = new List<Author>();
+        public string Country { get; set; }
+        public int RegistrationNumber { get; set; }
+        public DateTime DateOfApplication { get; set; }
+        public DateTime DateOfPublication { get; set; }
 
         public Patent(string name, Guid id, List<Author> inventors, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note) : base(id, name)
         {
-            this.inventors = inventors;
-            this.country = country;
-            this.registrationNumber = registrationNumber;
-            this.dateOfApplication = dateOfApplication;
-            this.dateOfPublication = dateOfPublication;
-            this.numberOfPages = numberOfPages;
-            this.note = note;
+            this.Inventors = inventors;
+            this.Country = country;
+            this.RegistrationNumber = registrationNumber;
+            this.DateOfApplication = dateOfApplication;
+            this.DateOfPublication = dateOfPublication;
+            this.NumberOfPages = numberOfPages;
+            this.Note = note;
         }
 
-        public override string ToString()
+        public Patent(string name, List<Author> inventors, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note) : base(name)
         {
-            throw new NotImplementedException();
+            Inventors = inventors;
+            Country = country;
+            RegistrationNumber = registrationNumber;
+            DateOfApplication = dateOfApplication;
+            DateOfPublication = dateOfPublication;
+            NumberOfPages = numberOfPages;
+            Note = note;
         }
 
         public int GetYearOfPublishing()
         {
-            return dateOfPublication.Year;
+            return DateOfPublication.Year;
         }
 
         public List<Author> GetAuthors()
         {
-            return inventors;
+            return Inventors;
         }
 
         public int GetYearOfPublication()
         {
-            return dateOfPublication.Year;
+            return DateOfPublication.Year;
         }
     }
 }

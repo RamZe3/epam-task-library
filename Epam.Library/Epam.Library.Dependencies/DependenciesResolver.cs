@@ -27,7 +27,13 @@ namespace Epam.Library.Dependencies
         }
 
         public IInformationResourceDAL InformationResourceDAL => new RAMMemory();
+        public IBookDAL bookDAL => new BookRAMDAL();
+        public IPaperDAL paperDAL => new PaperRAMDAL();
+        public IPatentDAL patentDAL => new PatentRAMDAL();
 
         public IInformationResourceLogic InformationResourceLogic => new InformationResourceLogic(InformationResourceDAL);
+        public IBookLogic bookLogic => new BookLogic(bookDAL);
+        public IPaperLogic paperLogic => new PaperLogic(paperDAL);
+        public IPatentLogic patentLogic => new PatentLogic(patentDAL);
     }
 }

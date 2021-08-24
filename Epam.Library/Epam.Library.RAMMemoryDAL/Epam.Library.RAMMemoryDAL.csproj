@@ -41,6 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BookRAMDAL.cs" />
+    <Compile Include="CompareResources\ComparisonerResources.cs" />
+    <Compile Include="PaperRAMDAL.cs" />
+    <Compile Include="PatentRAMDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RAMMemory.cs" />
   </ItemGroup>

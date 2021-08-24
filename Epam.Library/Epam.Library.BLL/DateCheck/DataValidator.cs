@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.BLL.DateCheck
 {
-    public class DataValidator
+    public class DataValidator : IDataValidator
     {
         private static BookDateChecker _BookDateChecker = new BookDateChecker();
         private static PaperDateChecker _PaperDateChecker = new PaperDateChecker();
@@ -15,39 +15,39 @@ namespace Epam.Library.BLL.DateCheck
 
         public bool IsBookCorrect(Book book)
         {
-            return _BookDateChecker.IsNameCorrect(book.name) &&
-                _BookDateChecker.IsAuthorsCorrect(book.authors) &&
-                _BookDateChecker.IsPlaceOfPublicationCorrect(book.placeOfPublication) &&
-                _BookDateChecker.IsPublisherCorrect(book.publisher) &&
-                _BookDateChecker.IsYearOfPublishingCorrect(book.yearOfPublishing) &&
-                _BookDateChecker.IsNumberOfPagesCorrect(book.numberOfPages) &&
-                _BookDateChecker.IsNoteCorrect(book.note) &&
+            return _BookDateChecker.IsNameCorrect(book.Name) &&
+                _BookDateChecker.IsAuthorsCorrect(book.Authors) &&
+                _BookDateChecker.IsPlaceOfPublicationCorrect(book.PlaceOfPublication) &&
+                _BookDateChecker.IsPublisherCorrect(book.Publisher) &&
+                _BookDateChecker.IsYearOfPublishingCorrect(book.YearOfPublishing) &&
+                _BookDateChecker.IsNumberOfPagesCorrect(book.NumberOfPages) &&
+                _BookDateChecker.IsNoteCorrect(book.Note) &&
                 _BookDateChecker.IsISBNCorrect(book.ISBN);
         }
 
         public bool IsPaperCorrect(Paper paper)
         {
-            return _PaperDateChecker.IsNameCorrect(paper.name) &&
-                _PaperDateChecker.IsPlaceOfPublicationCorrect(paper.placeOfPublication) &&
-                _PaperDateChecker.IsPublisherCorrect(paper.publisher) &&
-                _PaperDateChecker.IsYearOfPublishingCorrect(paper.yearOfPublishing) &&
-                _PaperDateChecker.IsNumberOfPagesCorrect(paper.numberOfPages) &&
-                _PaperDateChecker.IsNoteCorrect(paper.note) &&
-                _PaperDateChecker.IsNumberCorrect(paper.number) &&
-                _PaperDateChecker.IsDateCorrect(paper.yearOfPublishing, paper.date) &&
+            return _PaperDateChecker.IsNameCorrect(paper.Name) &&
+                _PaperDateChecker.IsPlaceOfPublicationCorrect(paper.PlaceOfPublication) &&
+                _PaperDateChecker.IsPublisherCorrect(paper.Publisher) &&
+                _PaperDateChecker.IsYearOfPublishingCorrect(paper.YearOfPublishing) &&
+                _PaperDateChecker.IsNumberOfPagesCorrect(paper.NumberOfPages) &&
+                _PaperDateChecker.IsNoteCorrect(paper.Note) &&
+                _PaperDateChecker.IsNumberCorrect(paper.Number) &&
+                _PaperDateChecker.IsDateCorrect(paper.YearOfPublishing, paper.Date) &&
                 _PaperDateChecker.IsISSNCorrect(paper.ISSN);
         }
 
         public bool IsPatentCorrect(Patent patent)
         {
-            return _PatentDateChecker.IsNameCorrect(patent.name) &&
-                _PatentDateChecker.IsInventorsCorrect(patent.inventors) &&
-                _PatentDateChecker.IsCountryCorrect(patent.country) &&
-                _PatentDateChecker.IsRegistrationNumberCorrect(patent.registrationNumber) &&
-                _PatentDateChecker.IsDateOfApplicationCorrect(patent.dateOfApplication) &&
-                _PatentDateChecker.IsDateOfPublicationCorrect(patent.dateOfApplication, patent.dateOfPublication) &&
-                _PatentDateChecker.IsNumberOfPagesCorrect(patent.numberOfPages) &&
-                _PatentDateChecker.IsNoteCorrect(patent.note);
+            return _PatentDateChecker.IsNameCorrect(patent.Name) &&
+                _PatentDateChecker.IsInventorsCorrect(patent.Inventors) &&
+                _PatentDateChecker.IsCountryCorrect(patent.Country) &&
+                _PatentDateChecker.IsRegistrationNumberCorrect(patent.RegistrationNumber) &&
+                _PatentDateChecker.IsDateOfApplicationCorrect(patent.DateOfApplication) &&
+                _PatentDateChecker.IsDateOfPublicationCorrect(patent.DateOfApplication, patent.DateOfPublication) &&
+                _PatentDateChecker.IsNumberOfPagesCorrect(patent.NumberOfPages) &&
+                _PatentDateChecker.IsNoteCorrect(patent.Note);
         }
     }
 }

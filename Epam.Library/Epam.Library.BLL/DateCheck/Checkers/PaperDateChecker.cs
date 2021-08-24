@@ -9,9 +9,11 @@ namespace Epam.Library.BLL.DateCheck
 {
     public class PaperDateChecker : GeneralDateChecker
     {
+        private const int MinYearOfPublishing = 1400;
+
         public bool IsYearOfPublishingCorrect(int yearOfPublishing)
         {
-            return (yearOfPublishing <= DateTime.Now.Year) && (yearOfPublishing >= 1400);
+            return (yearOfPublishing <= DateTime.Now.Year) && (yearOfPublishing >= MinYearOfPublishing);
         }
 
         public bool IsNumberCorrect(int number)
@@ -34,7 +36,7 @@ namespace Epam.Library.BLL.DateCheck
         public bool IsISSNCorrect(string ISSN)
         {
             Regex regex = new Regex(@"(^ISSN \d{4}-\d{4}$)");
-            return regex.IsMatch(ISSN) || ISSN == "";
+            return String.IsNullOrEmpty(ISSN) || regex.IsMatch(ISSN);
         }
     }
 }

@@ -10,6 +10,9 @@ namespace Epam.Library.BLL.DateCheck
 {
     public class PatentDateChecker : GeneralDateChecker
     {
+        private const int MaxCountrySize = 200;
+        private const int MinYearOfApplication = 1474;
+
         public bool IsInventorsCorrect(List<Author> inventors)
         {
             bool Iscorrect = true;
@@ -23,8 +26,7 @@ namespace Epam.Library.BLL.DateCheck
         public bool IsCountryCorrect(string country)
         {
             Regex regex = new Regex(@"(^[A-Z][a-z]+$)|(^[A-Z]+$)|(^[А-ЯЁ][а-яё]+$)|(^[А-ЯЁ]+$)");
-            Regex countRegex = new Regex(@"^[\w\W]{1,200}$");
-            return regex.IsMatch(country) && countRegex.IsMatch(country);
+            return (!String.IsNullOrEmpty(country) && country.Count() <= MaxCountrySize) && regex.IsMatch(country);
         }
 
         public bool IsRegistrationNumberCorrect(int registrationNumber)
@@ -41,12 +43,12 @@ namespace Epam.Library.BLL.DateCheck
 
         public bool IsDateOfApplicationCorrect(DateTime dateOfApplication)
         {
-            return (dateOfApplication.Year >= 1474) && (dateOfApplication <= DateTime.Now);
+            return (dateOfApplication.Year >= MinYearOfApplication) && (dateOfApplication <= DateTime.Now);
         }
 
         public bool IsDateOfPublicationCorrect(DateTime dateOfApplication , DateTime dateOfPublication)
         {
-            return (dateOfPublication < DateTime.Now) && (dateOfPublication >= dateOfApplication) && (dateOfPublication.Year >= 1474);
+            return (dateOfPublication < DateTime.Now) && (dateOfPublication >= dateOfApplication) && (dateOfPublication.Year >= MinYearOfApplication);
         }
 
     }

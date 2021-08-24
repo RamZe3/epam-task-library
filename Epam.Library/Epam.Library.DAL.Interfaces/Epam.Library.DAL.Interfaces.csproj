@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBookDAL.cs" />
     <Compile Include="IInformationResourceDAL.cs" />
+    <Compile Include="IPaperDAL.cs" />
+    <Compile Include="IPatentDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

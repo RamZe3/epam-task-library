@@ -23,8 +23,14 @@ namespace Epam.Library.ConsolePL
 
             DependenciesResolver dependenciesResolver = new DependenciesResolver();
             IInformationResourceLogic Logic = dependenciesResolver.InformationResourceLogic;
-            Logic.AddBook("Whole", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-0");
-            Logic.AddBook("Club", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
+            IBookLogic bookLogic = dependenciesResolver.bookLogic;
+            IPaperLogic paperLogic = dependenciesResolver.paperLogic;
+            IPatentLogic patentLogic = dependenciesResolver.patentLogic;
+
+            Book book1 = new Book("Whole", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-0");
+            bookLogic.AddBook(book1);
+            Book book2 = new Book("Club", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
+            bookLogic.AddBook(book2);
 
             List<Author> authors1 = new List<Author>();
             authors1.Add(new Author("Artem", "Urlov"));
@@ -32,7 +38,8 @@ namespace Epam.Library.ConsolePL
 
             try
             {
-                Logic.AddBook("Club", authors1, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
+                Book book3 = new Book("Club", authors1, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
+                bookLogic.AddBook(book3);
             }
             catch (InvalidOperationException ex)
             {
@@ -42,10 +49,12 @@ namespace Epam.Library.ConsolePL
 
             //ISSN 1233-1213
             DateTime dateTime1 = DateTime.Now;
-            Logic.AddPaper("Azbuka", "Saratov", "PaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
+            Paper paper = new Paper("Azbuka",  "Saratov", "PaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
+            paperLogic.AddPaper(paper);
             try
             {
-                Logic.AddPaper("Not Azbuka", "Saratov", "PaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
+                Paper paper1 = new Paper("Not Azbuka",  "Saratov", "PaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
+                paperLogic.AddPaper(paper1);
             }
             catch (InvalidOperationException ex)
             {
@@ -53,10 +62,12 @@ namespace Epam.Library.ConsolePL
                 Console.WriteLine(ex.Message);
             }
 
-            Logic.AddPatent("Phone", authors, "Russia", 132, dateTime, dateTime1, 12, "");
+            Patent patent1 = new Patent("Phone",  authors, "Russia", 132, dateTime, dateTime1, 12, "");
+            patentLogic.AddPatent(patent1);
             try
             {
-                Logic.AddPatent("Iphone", authors, "Russia", 132, dateTime, dateTime1, 12, "221");
+                Patent patent2 = new Patent("Iphone",   authors, "Russia", 132, dateTime, dateTime1, 12, "221");
+                patentLogic.AddPatent(patent2);
             }
             catch (InvalidOperationException ex)
             {
@@ -67,44 +78,46 @@ namespace Epam.Library.ConsolePL
             List<Book> books = Logic.FindBooksByAuthor(new Author("Ramil", "Fitkulin"));
             foreach (var book in books)
             {
-                Console.WriteLine(book.id + " " + book.name + " " + book.ISBN);
+                Console.WriteLine(book.Id + " " + book.Name + " " + book.ISBN);
             }
             Console.WriteLine();
 
             List<Patent> patents = Logic.FindPatentsByAuthor(new Author("Ramil", "Fitkulin"));
             foreach (var patent in patents)
             {
-                Console.WriteLine(patent.name + " " + patent.country);
+                Console.WriteLine("Patents");
+                Console.WriteLine(patent.Name + " " + patent.Country);
             }
             Console.WriteLine();
 
             List<InformationResource> informationResources = Logic.FindPatentsAndBooksByAuthor(new Author("Ramil", "Fitkulin"));
             foreach (var resource in informationResources)
             {
-                Console.WriteLine(resource.name);
+                Console.WriteLine("Patents and Books");
+                Console.WriteLine(resource.Name);
             }
             Console.WriteLine();
 
             foreach (var item in Logic.GetSortedLibraryByYearOfPublishing(false))
             {
                 var resource = (IHaveYearOfPublishing)item;
-                Console.WriteLine(item.name + " " + resource.GetYearOfPublishing());
+                Console.WriteLine(item.Name + " " + resource.GetYearOfPublishing());
             }
             Console.WriteLine();
 
             foreach (var book in Logic.SmartBookSearchByPublisher("Sar"))
             {
-                Console.WriteLine(book.name + " " + book.publisher);
+                Console.WriteLine(book.Name + " " + book.Publisher);
             }
             Console.WriteLine();
 
             foreach (var item in Logic.GroupingResourceByYearOfPublication())
             {
                 var resource = item;
-                Console.WriteLine(item.name);
+                Console.WriteLine(item.Name);
             }
             Console.WriteLine();
-            Console.WriteLine(Logic.FindResourceByName("Whole").name);
+            Console.WriteLine(Logic.FindResourceByName("Whole").Name);
             Console.WriteLine();
             Console.ReadKey();
         }

@@ -41,7 +41,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IBookLogic.cs" />
     <Compile Include="IInformationResourceLogic.cs" />
+    <Compile Include="IPaperLogic.cs" />
+    <Compile Include="IPatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
