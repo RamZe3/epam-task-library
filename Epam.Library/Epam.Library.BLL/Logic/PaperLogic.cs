@@ -33,7 +33,7 @@ namespace Epam.Library.BLL
 
         public void DeletePaper(Guid guid)
         {
-            throw new NotImplementedException();
+            _paperDAL.DeletePaper(guid);
         }
     }
 }

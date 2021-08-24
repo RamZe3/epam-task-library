@@ -29,8 +29,10 @@ namespace Epam.Library.ConsolePL
 
             Book book1 = new Book("Whole", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-0");
             bookLogic.AddBook(book1);
-            Book book2 = new Book("Club", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
+            Book book2 = new Book("Cluba", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
             bookLogic.AddBook(book2);
+            Book book35 = new Book("Claub", authors, "Saratov", "BookSar123", 1998, 12, "", "ISBN 7-11-12-8");
+            bookLogic.AddBook(book35);
 
             List<Author> authors1 = new List<Author>();
             authors1.Add(new Author("Artem", "Urlov"));
@@ -53,7 +55,7 @@ namespace Epam.Library.ConsolePL
             paperLogic.AddPaper(paper);
             try
             {
-                Paper paper1 = new Paper("Not Azbuka",  "Saratov", "PaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
+                Paper paper1 = new Paper("Not Azbuka",  "Saratov", "BookAndPaperEnt", 2021, 3, "Paper", 1223, dateTime1, "ISSN 1233-1213");
                 paperLogic.AddPaper(paper1);
             }
             catch (InvalidOperationException ex)
@@ -105,19 +107,31 @@ namespace Epam.Library.ConsolePL
             }
             Console.WriteLine();
 
-            foreach (var book in Logic.SmartBookSearchByPublisher("Sar"))
+            Console.WriteLine("Search");
+            foreach (var item in Logic.SmartBookSearchByPublisher("Book"))
             {
-                Console.WriteLine(book.Name + " " + book.Publisher);
+                Console.WriteLine("Publisher= " + item.Key);
+                foreach (var book in item.Value)
+                {
+                    Console.WriteLine(book.Name);
+                }
             }
             Console.WriteLine();
 
+            
+            Console.WriteLine("GroupBy");
             foreach (var item in Logic.GroupingResourceByYearOfPublication())
             {
-                var resource = item;
-                Console.WriteLine(item.Name);
+                Console.WriteLine("Year= " +  item.Key);
+                foreach (var res in item.Value)
+                {
+                    //IHaveYearOfPublication rea = (IHaveYearOfPublication)res;
+                    Console.WriteLine(res.Name);
+                }
             }
             Console.WriteLine();
-            Console.WriteLine(Logic.FindResourceByName("Whole").Name);
+            Console.WriteLine("SmartSearch");
+            //Console.WriteLine(Logic.FindResourceByName("Whole"));
             Console.WriteLine();
             Console.ReadKey();
         }

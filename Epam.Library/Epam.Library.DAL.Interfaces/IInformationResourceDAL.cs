@@ -10,12 +10,12 @@ namespace Epam.Library.DAL.Interfaces
     public interface IInformationResourceDAL
     {
         List<InformationResource> GetLibrary();
-        InformationResource FindResourceByName(string name);
+        List<InformationResource> FindResourcesByName(string name);
         List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse);
         List<Book> FindBooksByAuthor(Author author);
         List<Patent> FindPatentsByAuthor(Author author);
         List<InformationResource> FindPatentsAndBooksByAuthor(Author author);
-        List<Book> SmartBookSearchByPublisher(string str);
-        List<InformationResource> GroupingResourceByYearOfPublication();
+        Dictionary<string, List<Book>> SmartBookSearchByPublisher(string str);
+        Dictionary<int, List<InformationResource>> GroupingResourceByYearOfPublication();
     }
 }

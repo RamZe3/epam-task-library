@@ -37,9 +37,9 @@ namespace Epam.Library.BLL
             return _informationResourceDAL.FindPatentsByAuthor(author);
         }
 
-        public InformationResource FindResourceByName(string name)
+        public List<InformationResource> FindResourcesByName(string name)
         {
-            return _informationResourceDAL.FindResourceByName(name);
+            return _informationResourceDAL.FindResourcesByName(name);
         }
 
         public List<InformationResource> GetLibrary()
@@ -52,12 +52,12 @@ namespace Epam.Library.BLL
             return _informationResourceDAL.GetSortedLibraryByYearOfPublishing(reverse);
         }
 
-        public List<InformationResource> GroupingResourceByYearOfPublication()
+        public Dictionary<int, List<InformationResource>> GroupingResourceByYearOfPublication()
         {
             return _informationResourceDAL.GroupingResourceByYearOfPublication();
         }
 
-        public List<Book> SmartBookSearchByPublisher(string str)
+        public Dictionary<string, List<Book>> SmartBookSearchByPublisher(string str)
         {
             return _informationResourceDAL.SmartBookSearchByPublisher(str);
         }

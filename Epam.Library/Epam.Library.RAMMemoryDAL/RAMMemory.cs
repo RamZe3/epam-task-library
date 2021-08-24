@@ -16,68 +16,32 @@ namespace Epam.Library.RAMMemoryDAL
         public List<Book> FindBooksByAuthor(Author author)
         {
             IEnumerable<Book> books = RAMMemory.Library.OfType<Book>();
-            books = books.ToList();
+            var answerBooks = books.Where(book => book.GetAuthors().Contains(author));
 
-            List<Book> answerBooks = new List<Book>();
-            foreach (var book in books)
-            {
-                foreach (var authorOfBook in book.Authors)
-                {
-                    if (authorOfBook == author)
-                    {
-                        answerBooks.Add(book);
-                    }
-                }
-            }
-
-            return answerBooks;
+            return answerBooks.ToList();
         }
 
         public List<InformationResource> FindPatentsAndBooksByAuthor(Author author)
         {
             IEnumerable<IHaveAuthors> haveAuthors = RAMMemory.Library.OfType<IHaveAuthors>();
-            haveAuthors = haveAuthors.ToList();
 
-            List<InformationResource> resources = new List<InformationResource>();
-            foreach (var resource in haveAuthors)
-            {
-                foreach (var authorOfBook in resource.GetAuthors())
-                {
-                    if (authorOfBook == author)
-                    {
-                        resources.Add((InformationResource)resource);
-                    }
-                }
-            }
+            var resources = haveAuthors.Where(resource => resource.GetAuthors().Contains(author)).Select(resource => (InformationResource)resource);
 
-            return resources;
+            return resources.ToList();
         }
 
         public List<Patent> FindPatentsByAuthor(Author author)
         {
             IEnumerable<Patent> patents = RAMMemory.Library.OfType<Patent>();
-            patents = patents.ToList();
+            var answerPatents = patents.Where(patent => patent.GetAuthors().Contains(author));
 
-            List<Patent> answerPatents = new List<Patent>();
-            foreach (var patent in patents)
-            {
-                foreach (var authorOfPattent in patent.Inventors)
-                {
-                    if (authorOfPattent == author)
-                    {
-                        answerPatents.Add(patent);
-                    }
-                }
-            }
-
-            return answerPatents;
+            return answerPatents.ToList();
         }
 
-        public InformationResource FindResourceByName(string name)
+        public List<InformationResource> FindResourcesByName(string name)
         {
-            List<InformationResource> Library = RAMMemory.Library;
-            InformationResource resource = Library.Single(res => res.Name == name);
-            return resource;
+            var resources = RAMMemory.Library.Where(resource => resource.Name == name);
+            return resources.ToList();
         }
 
         public List<InformationResource> GetLibrary()
@@ -87,62 +51,35 @@ namespace Epam.Library.RAMMemoryDAL
 
         public List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse)
         {
-            IEnumerable<IHaveYearOfPublishing> IHaveYearOfPublishingresources = RAMMemory.Library.OfType<IHaveYearOfPublishing>();
-            IHaveYearOfPublishingresources = IHaveYearOfPublishingresources.ToList();
-
-            IEnumerable<InformationResource> resources =
-                from resource in IHaveYearOfPublishingresources
-                orderby resource.GetYearOfPublishing() descending
-                select (InformationResource)resource;
-
-            List<InformationResource> sortedResources = resources.ToList();
+            IEnumerable<IHaveYearOfPublishing> iHaveYearOfPublishingresources = RAMMemory.Library.OfType<IHaveYearOfPublishing>();
+            IEnumerable<IHaveYearOfPublishing> resources;
             if (reverse)
             {
-                sortedResources.Reverse();
-                return sortedResources;
+                resources = iHaveYearOfPublishingresources.OrderByDescending(x => x.GetYearOfPublishing());
             }
             else
             {
-                return sortedResources;
+                resources = iHaveYearOfPublishingresources.OrderBy(x => x.GetYearOfPublishing());
             }
+            return resources.Cast<InformationResource>().ToList();
         }
 
-        public List<InformationResource> GroupingResourceByYearOfPublication()
+        public Dictionary<int ,List<InformationResource>> GroupingResourceByYearOfPublication()
         {
-            List<InformationResource> Library = RAMMemory.Library;
-            var resources =
-                from resource in Library
-                group resource by (resource is IHaveYearOfPublication);
-
-            List<InformationResource> informationResources = new List<InformationResource>();
-            foreach (var item in resources)
-            {
-                foreach (var resource in item)
-                {
-                    if (item.Key)
-                    {
-                        informationResources.Add(resource);
-                    }
-                }
-            }
-            return informationResources;
+            IEnumerable<IHaveYearOfPublishing> iHaveYearOfPublishingresources = RAMMemory.Library.OfType<IHaveYearOfPublishing>();
+            //var resources = iHaveYearOfPublishingresources.OrderBy(g => g.GetYearOfPublishing()).GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
+            var resources = iHaveYearOfPublishingresources.GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
+            return resources;
         }
 
-        public List<Book> SmartBookSearchByPublisher(string str)
+        public Dictionary<string, List<Book>> SmartBookSearchByPublisher(string str)
         {
             IEnumerable<Book> books = RAMMemory.Library.OfType<Book>();
-            books = books.ToList();
+            var answer = books.Where(x => x.Publisher.StartsWith(str));
+            //var groupBooks = answer.OrderBy(g => g.Publisher).GroupBy(g => g.Publisher).ToDictionary(g => g.Key, g => g.ToList());
+            var groupBooks = answer.GroupBy(g => g.Publisher).ToDictionary(g => g.Key, g => g.ToList());
 
-            List<Book> answerBooks = new List<Book>();
-            foreach (var book in books)
-            {
-                if (book.Publisher.Contains(str))
-                {
-                    answerBooks.Add(book);
-                }
-            }
-
-            return answerBooks;
+            return groupBooks;
         }
     }
 }
