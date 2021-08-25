@@ -25,7 +25,8 @@ namespace Epam.Library.RAMMemoryDAL
         {
             IEnumerable<IHaveAuthors> haveAuthors = RAMMemory.Library.OfType<IHaveAuthors>();
 
-            var resources = haveAuthors.Where(resource => resource.GetAuthors().Contains(author)).Select(resource => (InformationResource)resource);
+            var resources = haveAuthors.Where(resource => resource.GetAuthors().Contains(author))
+                .Select(resource => (InformationResource)resource);
 
             return resources.ToList();
         }
@@ -67,8 +68,8 @@ namespace Epam.Library.RAMMemoryDAL
         public Dictionary<int ,List<InformationResource>> GroupingResourceByYearOfPublication()
         {
             IEnumerable<IHaveYearOfPublishing> iHaveYearOfPublishingresources = RAMMemory.Library.OfType<IHaveYearOfPublishing>();
-            //var resources = iHaveYearOfPublishingresources.OrderBy(g => g.GetYearOfPublishing()).GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
-            var resources = iHaveYearOfPublishingresources.GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
+            var resources = iHaveYearOfPublishingresources.OrderBy(g => g.GetYearOfPublishing()).GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
+            //var resources = iHaveYearOfPublishingresources.GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
             return resources;
         }
 

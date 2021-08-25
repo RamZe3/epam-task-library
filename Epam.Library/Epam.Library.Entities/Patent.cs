@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.Entities
 {
-    public class Patent : InformationResource, IHaveYearOfPublishing, IHaveAuthors, IHaveYearOfPublication
+    public class Patent : InformationResource, IHaveYearOfPublishing, IHaveAuthors
     {
         public List<Author> Inventors { get; set; } = new List<Author>();
         public string Country { get; set; }
