@@ -14,11 +14,9 @@ namespace Epam.Library.BLL
     public class InformationResourceLogic : IInformationResourceLogic
     {
         private IInformationResourceDAL _informationResourceDAL;
-        private IDataValidator _dataValidator;
 
         public InformationResourceLogic(IInformationResourceDAL informationResourceDAL)
         {
-            _dataValidator = new DataValidator();
             _informationResourceDAL = informationResourceDAL;
         }
 

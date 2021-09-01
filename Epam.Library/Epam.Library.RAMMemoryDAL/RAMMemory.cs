@@ -68,7 +68,9 @@ namespace Epam.Library.RAMMemoryDAL
         public Dictionary<int ,List<InformationResource>> GroupingResourceByYearOfPublication()
         {
             IEnumerable<IHaveYearOfPublishing> iHaveYearOfPublishingresources = RAMMemory.Library.OfType<IHaveYearOfPublishing>();
-            var resources = iHaveYearOfPublishingresources.OrderBy(g => g.GetYearOfPublishing()).GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
+            var resources = iHaveYearOfPublishingresources.OrderBy(g => g.GetYearOfPublishing())
+                .GroupBy(g => g.GetYearOfPublishing())
+                .ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
             //var resources = iHaveYearOfPublishingresources.GroupBy(g => g.GetYearOfPublishing()).ToDictionary(g => g.Key, g => g.Cast<InformationResource>().ToList());
             return resources;
         }
@@ -77,8 +79,10 @@ namespace Epam.Library.RAMMemoryDAL
         {
             IEnumerable<Book> books = RAMMemory.Library.OfType<Book>();
             var answer = books.Where(x => x.Publisher.StartsWith(str));
-            //var groupBooks = answer.OrderBy(g => g.Publisher).GroupBy(g => g.Publisher).ToDictionary(g => g.Key, g => g.ToList());
-            var groupBooks = answer.GroupBy(g => g.Publisher).ToDictionary(g => g.Key, g => g.ToList());
+            var groupBooks = answer.OrderBy(g => g.Publisher)
+                .GroupBy(g => g.Publisher)
+                .ToDictionary(g => g.Key, g => g.ToList());
+            //var groupBooks = answer.GroupBy(g => g.Publisher).ToDictionary(g => g.Key, g => g.ToList());
 
             return groupBooks;
         }

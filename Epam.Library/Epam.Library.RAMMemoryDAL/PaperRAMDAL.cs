@@ -12,7 +12,7 @@ namespace Epam.Library.RAMMemoryDAL
     {
         private ComparisonerResources _comparisonerResources = new ComparisonerResources();
 
-        public void AddPaper(Paper newPaper)
+        public bool AddPaper(Paper newPaper)
         {
             foreach (var resource in RAMMemory.Library)
             {
@@ -27,17 +27,19 @@ namespace Epam.Library.RAMMemoryDAL
             }
 
             RAMMemory.Library.Add(newPaper);
+            return true;
         }
 
-        public void DeletePaper(Guid id)
+        public bool DeletePaper(Guid id)
         {
             var resource = RAMMemory.Library.SingleOrDefault(r => r.Id == id);
             if (resource == null)
             {
-                throw new InvalidOperationException("Delete Exception");
+                return false;
             }
 
             RAMMemory.Library.Remove(resource);
+            return true;
         }
     }
 }

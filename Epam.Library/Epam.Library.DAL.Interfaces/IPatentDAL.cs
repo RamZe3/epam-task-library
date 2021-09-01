@@ -9,7 +9,7 @@ namespace Epam.Library.DAL.Interfaces
 {
     public interface IPatentDAL
     {
-        void AddPatent(Patent patent);
-        void DeletePatent(Guid id);
+        bool AddPatent(Patent patent);
+        bool DeletePatent(Guid id);
     }
 }

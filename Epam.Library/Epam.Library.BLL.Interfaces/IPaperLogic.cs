@@ -1,4 +1,5 @@
 ﻿using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Epam.Library.BLL.Interfaces
 {
     public interface IPaperLogic
     {
-        void AddPaper(Paper paper);
-        void DeletePaper(Guid guid);
+        List<DataValidationError> AddPaper(Paper paper);
+        bool DeletePaper(Guid guid);
     }
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Epam.Library.Dependencies;
 using Epam.Library.BLL.Interfaces;
 using Epam.Library.Entities.Interfaces;
+using Epam.Library.Entities.Exceptions;
 
 namespace Epam.Library.ConsolePL
 {
@@ -26,7 +27,8 @@ namespace Epam.Library.ConsolePL
             IBookLogic bookLogic = dependenciesResolver.bookLogic;
             IPaperLogic paperLogic = dependenciesResolver.paperLogic;
             IPatentLogic patentLogic = dependenciesResolver.patentLogic;
-
+            Book bookWithAuthorIvanIvanov = new Book("TestBook", authors, "Saratov", "BookSar", 2000, 12, "note", "ISBN 7-12-12-1");
+            bookLogic.AddBook(bookWithAuthorIvanIvanov);
             Book book1 = new Book("Whole", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-0");
             bookLogic.AddBook(book1);
             Book book2 = new Book("Cluba", authors, "Saratov", "BookSar", 2000, 12, "", "ISBN 7-12-12-8");
@@ -77,11 +79,14 @@ namespace Epam.Library.ConsolePL
                 Console.WriteLine(ex.Message);
             }
 
+            Console.WriteLine("Find Books");
             List<Book> books = Logic.FindBooksByAuthor(new Author("Ramil", "Fitkulin"));
             foreach (var book in books)
             {
+                Console.WriteLine(books.Contains(book));
                 Console.WriteLine(book.Id + " " + book.Name + " " + book.ISBN);
             }
+            Console.WriteLine("End Find Books");
             Console.WriteLine();
 
             List<Patent> patents = Logic.FindPatentsByAuthor(new Author("Ramil", "Fitkulin"));
@@ -133,6 +138,19 @@ namespace Epam.Library.ConsolePL
             Console.WriteLine("SmartSearch");
             //Console.WriteLine(Logic.FindResourceByName("Whole"));
             Console.WriteLine();
+
+            Author author = new Author("Ramil", "Fitkulin");
+            Console.WriteLine(Logic.FindBooksByAuthor(author).Contains(bookWithAuthorIvanIvanov));
+            Console.WriteLine();
+            Console.WriteLine("Exept");
+            DateTime dateTime11 = new DateTime(2009, 3, 1, 7, 0, 0);
+            DateTime dateTime2 = new DateTime(2010, 3, 1, 7, 0, 0);
+            Patent patent123 = new Patent("testPatent", authors, "CanadaA", 132, dateTime11, dateTime2, 12, "221");
+            List<DataValidationError> dataValidationExceptions = patentLogic.AddPatent(patent123);
+            foreach (var item in dataValidationExceptions)
+            {
+                Console.WriteLine(item.Message + " - " + item.ErrorValue);
+            }
             Console.ReadKey();
         }
     }

@@ -2,6 +2,7 @@
 using Epam.Library.BLL.Interfaces;
 using Epam.Library.DAL.Interfaces;
 using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +22,23 @@ namespace Epam.Library.BLL
             _patentDAL = patentDAL;
         }
 
-        public void AddPatent(Patent patent)
+        public List<DataValidationError> AddPatent(Patent patent)
         {
-            if (!_dataValidator.IsPatentCorrect(patent))
+            List<DataValidationError> dataValidationExceptions = _dataValidator.IsPatentCorrect(patent);
+            if (dataValidationExceptions.Count != 0)
             {
-                return;
+                return dataValidationExceptions;
             }
-
-            _patentDAL.AddPatent(patent);
+            else
+            {
+                _patentDAL.AddPatent(patent);
+                return dataValidationExceptions;
+            }
         }
 
-        public void DeletePatent(Guid guid)
+        public bool DeletePatent(Guid guid)
         {
-            _patentDAL.DeletePatent(guid);
+            return _patentDAL.DeletePatent(guid);
         }
     }
 }

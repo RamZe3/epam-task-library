@@ -39,21 +39,76 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Castle.Core, Version=4.0.0.0, Culture=neutral, PublicKeyToken=407dd0808d44fbdc, processorArchitecture=MSIL">
+      <HintPath>..\packages\Castle.Core.4.4.0\lib\net45\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.2.1.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.Extensions.dll</HintPath>
     </Reference>
+    <Reference Include="Moq, Version=4.16.0.0, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.16.1\lib\net45\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="BLLTests\BookLogicTest.cs" />
+    <Compile Include="BLLTests\DateCheckTests\CheckersTests\BookDateCheckerTest.cs" />
+    <Compile Include="BLLTests\DateCheckTests\CheckersTests\GeneralDateCheckerTest.cs" />
+    <Compile Include="BLLTests\DateCheckTests\CheckersTests\PaperDateCheckerTest.cs" />
+    <Compile Include="BLLTests\DateCheckTests\CheckersTests\PatentDateCheckerTest.cs" />
+    <Compile Include="BLLTests\PaperLogicTest.cs" />
+    <Compile Include="BLLTests\PatentLogicTest.cs" />
+    <Compile Include="RAMMemoryDALTests\BookRAMDALTests.cs" />
+    <Compile Include="RAMMemoryDALTests\CompareResourcesTests\CompareResourcesTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RAMMemoryDALTests\PaperRAMDALTests.cs" />
+    <Compile Include="RAMMemoryDALTests\PatentRAMDALTests.cs" />
+    <Compile Include="RAMMemoryDALTests\RAMMemoryTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Epam.Library.BLL.Interfaces\Epam.Library.BLL.Interfaces.csproj">
+      <Project>{f553c504-15fe-4982-a091-23225f98d853}</Project>
+      <Name>Epam.Library.BLL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.BLL\Epam.Library.BLL.csproj">
+      <Project>{0a95235f-06d1-44d8-9fb4-847bcdefd13b}</Project>
+      <Name>Epam.Library.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.DAL.Interfaces\Epam.Library.DAL.Interfaces.csproj">
+      <Project>{ce75cc28-c292-4f68-8d91-a0bc56ecf9fd}</Project>
+      <Name>Epam.Library.DAL.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.DAL\Epam.Library.DAL.csproj">
+      <Project>{d857d7d5-e95a-4acf-bbfb-48e9d69565ac}</Project>
+      <Name>Epam.Library.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.Entities.Interfaces\Epam.Library.Entities.Interfaces.csproj">
+      <Project>{4c2f774a-25f6-4de3-b03d-1f40c2eca934}</Project>
+      <Name>Epam.Library.Entities.Interfaces</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.Entities\Epam.Library.Entities.csproj">
+      <Project>{20e49e45-ef38-4f84-9560-072ab99291c3}</Project>
+      <Name>Epam.Library.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Epam.Library.RAMMemoryDAL\Epam.Library.RAMMemoryDAL.csproj">
+      <Project>{ebbbd5c3-8bb9-4972-8b0a-350c27ffecaa}</Project>
+      <Name>Epam.Library.RAMMemoryDAL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 using Epam.Library.BLL.Interfaces;
 using Epam.Library.DAL.Interfaces;
 using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,19 +22,24 @@ namespace Epam.Library.BLL
             _paperDAL = paperDAL;
         }
 
-        public void AddPaper(Paper paper)
+        public List<DataValidationError> AddPaper(Paper paper)
         {
-            if (!_dataValidator.IsPaperCorrect(paper))
-            {
-                return;
-            }
+            List<DataValidationError> dataValidationExceptions = _dataValidator.IsPaperCorrect(paper);
 
-            _paperDAL.AddPaper(paper);
+            if (dataValidationExceptions.Count != 0)
+            {
+                return dataValidationExceptions;
+            }
+            else
+            {
+                _paperDAL.AddPaper(paper);
+                return dataValidationExceptions;
+            }
         }
 
-        public void DeletePaper(Guid guid)
+        public bool DeletePaper(Guid guid)
         {
-            _paperDAL.DeletePaper(guid);
+           return _paperDAL.DeletePaper(guid);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace Epam.Library.RAMMemoryDAL
 {
     public class ComparisonerResources
     {
-        private static bool CompareAuthors(List<Author> authors1, List<Author> authors2)
+        public bool CompareAuthors(List<Author> authors1, List<Author> authors2)
         {
             foreach (var author in authors1)
             {

@@ -15,6 +15,11 @@ namespace Epam.Library.BLL.DateCheck
 
         public bool IsInventorsCorrect(List<Author> inventors)
         {
+            if (inventors.Count ==0)
+            {
+                return false;
+            }
+
             bool Iscorrect = true;
             foreach(var inventor in inventors)
             {

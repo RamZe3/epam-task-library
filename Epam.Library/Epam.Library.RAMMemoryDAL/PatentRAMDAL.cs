@@ -12,7 +12,7 @@ namespace Epam.Library.RAMMemoryDAL
     {
         private ComparisonerResources _comparisonerResources = new ComparisonerResources();
 
-        public void AddPatent(Patent newPatent)
+        public bool AddPatent(Patent newPatent)
         {
             foreach (var resource in RAMMemory.Library)
             {
@@ -27,17 +27,19 @@ namespace Epam.Library.RAMMemoryDAL
             }
 
             RAMMemory.Library.Add(newPatent);
+            return true;
         }
 
-        public void DeletePatent(Guid id)
+        public bool DeletePatent(Guid id)
         {
             var resource = RAMMemory.Library.SingleOrDefault(r => r.Id == id);
             if (resource == null)
             {
-                throw new InvalidOperationException("Delete Exception");
+                return false;
             }
 
             RAMMemory.Library.Remove(resource);
+            return true;
         }
     }
 }

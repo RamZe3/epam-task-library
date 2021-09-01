@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Author.cs" />
     <Compile Include="Book.cs" />
+    <Compile Include="Exceptions\DataValidationError.cs" />
     <Compile Include="InformationResource.cs" />
     <Compile Include="Interfaces\IHaveAuthors.cs" />
     <Compile Include="Interfaces\IHaveYearOfPublication.cs" />

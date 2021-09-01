@@ -9,7 +9,7 @@ namespace Epam.Library.DAL.Interfaces
 {
     public interface IBookDAL
     {
-        void AddBook(Book book);
-        void DeleteBook(Guid id);
+        bool AddBook(Book book);
+        bool DeleteBook(Guid id);
     }
 }

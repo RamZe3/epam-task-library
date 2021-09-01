@@ -21,7 +21,7 @@ namespace Epam.Library.BLL.DateCheck
             return !String.IsNullOrEmpty(name) && name.Count() <= MaxNameSize;
         }
 
-        protected static bool IsAuthorCorrect(Author author)
+        public bool IsAuthorCorrect(Author author)
         {
             Regex nameRegex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z]))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ]))+$)");
             Regex surNameRegex = new Regex(@"(^[A-Z]([a-z]|(\-[A-Z])|([a-z] ([a-z]|[A-Z])))+$)|(^[А-ЯЁ]([а-яё]|(\-[А-ЯЁ])|([а-яё] ([а-яё]|[А-ЯЁ])))+$)");

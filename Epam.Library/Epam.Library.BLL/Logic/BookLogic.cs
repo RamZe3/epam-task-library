@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Epam.Library.BLL.DateCheck;
+using Epam.Library.Entities.Exceptions;
 
 namespace Epam.Library.BLL
 {
@@ -21,19 +22,23 @@ namespace Epam.Library.BLL
             _dataValidator = new DataValidator();
         }
 
-        public void AddBook(Book book)
+        public List<DataValidationError> AddBook(Book book)
         {
-            if (!_dataValidator.IsBookCorrect(book))
+            List<DataValidationError> dataValidationExceptions = _dataValidator.IsBookCorrect(book);
+            if (dataValidationExceptions.Count != 0)
             {
-                return;
+                return dataValidationExceptions;
             }
-
-            _bookDAL.AddBook(book);
+            else
+            {
+                    _bookDAL.AddBook(book);
+                return dataValidationExceptions;
+            }
         }
 
-        public void DeleteBook(Guid guid)
+        public bool DeleteBook(Guid guid)
         {
-            _bookDAL.DeleteBook(guid);
+            return _bookDAL.DeleteBook(guid);
         }
     }
 }

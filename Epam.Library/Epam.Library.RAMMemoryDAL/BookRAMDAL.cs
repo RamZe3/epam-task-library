@@ -11,7 +11,7 @@ namespace Epam.Library.RAMMemoryDAL
     public class BookRAMDAL : IBookDAL
     {
         private ComparisonerResources _comparisonerResources = new ComparisonerResources();
-        public void AddBook(Book newBook)
+        public bool AddBook(Book newBook)
         {
             foreach (var resource in RAMMemory.Library)
             {
@@ -26,17 +26,19 @@ namespace Epam.Library.RAMMemoryDAL
             }
 
             RAMMemory.Library.Add(newBook);
+            return true;
         }
 
-        public void DeleteBook(Guid id)
+        public bool DeleteBook(Guid id)
         {
             var resource = RAMMemory.Library.SingleOrDefault(r => r.Id == id);
             if (resource == null)
             {
-                throw new InvalidOperationException("Delete Exception");
+                return false;
             }
 
             RAMMemory.Library.Remove(resource);
+            return true;
         }
     }
 }

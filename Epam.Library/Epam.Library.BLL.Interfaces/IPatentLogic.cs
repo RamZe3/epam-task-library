@@ -1,4 +1,5 @@
 ﻿using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Epam.Library.BLL.Interfaces
 {
     public interface IPatentLogic
     {
-        void AddPatent(Patent patent);
-        void DeletePatent(Guid guid);
+        List<DataValidationError> AddPatent(Patent patent);
+        bool DeletePatent(Guid guid);
     }
 }
