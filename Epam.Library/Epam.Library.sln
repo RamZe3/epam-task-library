@@ -55,6 +55,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Library.Entities.Inter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{8EA924AB-7E76-4FE9-8E37-093F2EB3E100}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epam.Library.SQLDAL", "SQLDAL\Epam.Library.SQLDAL.csproj", "{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{8EA924AB-7E76-4FE9-8E37-093F2EB3E100}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EA924AB-7E76-4FE9-8E37-093F2EB3E100}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EA924AB-7E76-4FE9-8E37-093F2EB3E100}.Release|Any CPU.Build.0 = Release|Any CPU
+		{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +126,7 @@ Global
 		{EBBBD5C3-8BB9-4972-8B0A-350C27FFECAA} = {AB2A4479-AC97-48E4-B64C-057C316891A1}
 		{4C2F774A-25F6-4DE3-B03D-1F40C2ECA934} = {75EF10A3-7BB9-47AD-9234-0A6BE22AA0E8}
 		{8EA924AB-7E76-4FE9-8E37-093F2EB3E100} = {5ADBF889-B44B-4B12-AB2D-ABA64A700EE6}
+		{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2} = {AB2A4479-AC97-48E4-B64C-057C316891A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C84C5C8A-AF48-4CF3-8A53-3C855F2629E8}

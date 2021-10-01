@@ -9,6 +9,7 @@ using Epam.Library.Dependencies;
 using Epam.Library.BLL.Interfaces;
 using Epam.Library.Entities.Interfaces;
 using Epam.Library.Entities.Exceptions;
+using Epam.Library.SQLDAL;
 
 namespace Epam.Library.ConsolePL
 {
@@ -17,7 +18,7 @@ namespace Epam.Library.ConsolePL
         static void Main(string[] args)
         {
 
-            List<Author> authors = new List<Author>();
+            /*List<Author> authors = new List<Author>();
             authors.Add(new Author("Ramil", "Fitkulin"));
             authors.Add(new Author("Artem", "Urlov"));
             DateTime dateTime = new DateTime(2008, 3, 1, 7, 0, 0);
@@ -151,7 +152,33 @@ namespace Epam.Library.ConsolePL
             {
                 Console.WriteLine(item.Message + " - " + item.ErrorValue);
             }
-            Console.ReadKey();
+            Console.ReadKey();*/
+
+
+
+            List<Author> authors = new List<Author>();
+            authors.Add(new Author("ASD", "Qwe"));
+            authors.Add(new Author("As", "Qw"));
+            Book book1 = new Book("Qwe12", authors, "Saratov", "BookSar", 2000, 17, "", "ISBN 7-12-12-0");
+            BookSQLDAL bookSQLDAL = new BookSQLDAL();
+            //bookSQLDAL.AddBook(book1);
+            //bookSQLDAL.DeleteBook(new Guid("c6e04a9d-4a3f-44d9-83fa-8050dec08e89"));
+
+
+            DateTime dateTime1 = new DateTime(1900, 2, 1);
+            Paper paper = new Paper("Azbuka", "Saratov", "PaperEnt", 2021, 1223, "Paper", 12223, dateTime1, "ISSN 1233-1213");
+            PaperSQLDAL paperSQLDAL = new PaperSQLDAL();
+            //paperSQLDAL.AddPaper(paper);
+
+            Patent patent2 = new Patent("Iphone", authors, "Russia", 132, DateTime.Now, dateTime1, 12, "221");
+            PatentSQLDAL patentSQLDAL = new PatentSQLDAL();
+            patentSQLDAL.AddPatent(patent2);
+
+            //foreach (var item in patent2.Inventors)
+            //{
+            //    Console.WriteLine(item.Id);
+            //}
+            //Console.ReadLine();
         }
     }
 }

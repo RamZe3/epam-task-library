@@ -4,17 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A2A92153-A2CA-40E8-8184-F0EE051C1B7A}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Epam.Library.ConsolePL</RootNamespace>
-    <AssemblyName>Epam.Library.ConsolePL</AssemblyName>
+    <ProjectGuid>{637DD0B0-6DC8-4092-A2BA-2280FF7B27D2}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SQLDAL</RootNamespace>
+    <AssemblyName>SQLDAL</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -24,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -35,6 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SqlClient, Version=4.6.1.3, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Data.SqlClient.4.8.3\lib\net461\System.Data.SqlClient.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,33 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="BookSQLDAL.cs" />
+    <Compile Include="IFSQLDAL.cs" />
+    <Compile Include="PaperSQLDAL.cs" />
+    <Compile Include="PatentSQLDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Epam.Library.BLL.Interfaces\Epam.Library.BLL.Interfaces.csproj">
-      <Project>{F553C504-15FE-4982-A091-23225F98D853}</Project>
-      <Name>Epam.Library.BLL.Interfaces</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Library.BLL\Epam.Library.BLL.csproj">
-      <Project>{0a95235f-06d1-44d8-9fb4-847bcdefd13b}</Project>
-      <Name>Epam.Library.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Epam.Library.Dependencies\Epam.Library.Dependencies.csproj">
-      <Project>{8fd4e38e-48d7-403e-8d3e-96e647ec8ef2}</Project>
-      <Name>Epam.Library.Dependencies</Name>
+    <ProjectReference Include="..\Epam.Library.DAL.Interfaces\Epam.Library.DAL.Interfaces.csproj">
+      <Project>{ce75cc28-c292-4f68-8d91-a0bc56ecf9fd}</Project>
+      <Name>Epam.Library.DAL.Interfaces</Name>
     </ProjectReference>
     <ProjectReference Include="..\Epam.Library.Entities\Epam.Library.Entities.csproj">
-      <Project>{20E49E45-EF38-4F84-9560-072AB99291C3}</Project>
+      <Project>{20e49e45-ef38-4f84-9560-072ab99291c3}</Project>
       <Name>Epam.Library.Entities</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SQLDAL\Epam.Library.SQLDAL.csproj">
-      <Project>{637dd0b0-6dc8-4092-a2ba-2280ff7b27d2}</Project>
-      <Name>Epam.Library.SQLDAL</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

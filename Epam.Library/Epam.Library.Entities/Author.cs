@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,7 +15,16 @@ namespace Epam.Library.Entities
 
         public Author(string name, string surname)
         {
+            /*
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(Name + " " + Surname));
+                Guid result = new Guid(hash);
+                this.Id =  result;
+            }
+            */
             this.Id = Guid.NewGuid();
+
             this.Name = name;
             this.Surname = surname;
         }
