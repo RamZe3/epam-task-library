@@ -41,5 +41,10 @@ namespace Epam.Library.RAMMemoryDAL
             RAMMemory.Library.Remove(resource);
             return true;
         }
+
+        public bool UpdatePaper(Paper paper)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

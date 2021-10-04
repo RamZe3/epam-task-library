@@ -40,5 +40,10 @@ namespace Epam.Library.BLL
         {
             return _bookDAL.DeleteBook(guid);
         }
+
+        public bool UpdateBook(Book book)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -40,5 +40,10 @@ namespace Epam.Library.BLL
         {
             return _patentDAL.DeletePatent(guid);
         }
+
+        public bool UpdatePatent(Patent patent)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

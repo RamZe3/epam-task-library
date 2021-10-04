@@ -11,6 +11,7 @@ namespace Epam.Library.BLL.Interfaces
     public interface IPatentLogic
     {
         List<DataValidationError> AddPatent(Patent patent);
+        bool UpdatePatent(Patent patent);
         bool DeletePatent(Guid guid);
     }
 }

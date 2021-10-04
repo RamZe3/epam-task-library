@@ -50,6 +50,42 @@ namespace Epam.Library.SQLDAL
             }
         }
 
+        public bool UpdatePaper(Paper paper)
+        {
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "Papers_UpdatePaper";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                command.Parameters.AddWithValue("@Id", paper.Id);
+                command.Parameters.AddWithValue("@Name", paper.Name);
+                command.Parameters.AddWithValue("@NumberOfPages", paper.NumberOfPages);
+                command.Parameters.AddWithValue("@Note", paper.Note);
+
+                command.Parameters.AddWithValue("@PlaceOfPublication", paper.PlaceOfPublication);
+                command.Parameters.AddWithValue("@Publisher", paper.Publisher);
+                command.Parameters.AddWithValue("@YearOfPublishing", new DateTime(paper.YearOfPublishing, 1, 1));
+                command.Parameters.AddWithValue("@Number", paper.Number);
+                SqlParameter sinceDateTimeParam = new SqlParameter("@Date", SqlDbType.Date);
+                sinceDateTimeParam.Value = paper.Date;
+                command.Parameters.Add(sinceDateTimeParam);
+                //command.Parameters.AddWithValue("@Date", sinceDateTimeParam);
+                command.Parameters.AddWithValue("@ISSN", paper.Number);
+
+                _connection.Open();
+
+                command.ExecuteNonQuery();
+
+                _connection.Close();
+
+                return true;
+            }
+        }
+
         public bool DeletePaper(Guid id)
         {
             using (var _connection = new SqlConnection(_connectionString))

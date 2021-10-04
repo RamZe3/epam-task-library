@@ -41,5 +41,10 @@ namespace Epam.Library.RAMMemoryDAL
             RAMMemory.Library.Remove(resource);
             return true;
         }
+
+        public bool UpdatePatent(Patent patent)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

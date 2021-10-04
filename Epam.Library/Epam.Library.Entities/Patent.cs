@@ -26,6 +26,16 @@ namespace Epam.Library.Entities
             this.Note = note;
         }
 
+        public Patent(string name, Guid id, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note) : base(id, name)
+        {
+            this.Country = country;
+            this.RegistrationNumber = registrationNumber;
+            this.DateOfApplication = dateOfApplication;
+            this.DateOfPublication = dateOfPublication;
+            this.NumberOfPages = numberOfPages;
+            this.Note = note;
+        }
+
         public Patent(string name, List<Author> inventors, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note) : base(name)
         {
             Inventors = inventors;

@@ -29,6 +29,22 @@ namespace Epam.Library.Entities
             this.Surname = surname;
         }
 
+        public Author(Guid id , string name, string surname)
+        {
+            /*
+            using (MD5 md5 = MD5.Create())
+            {
+                byte[] hash = md5.ComputeHash(Encoding.Default.GetBytes(Name + " " + Surname));
+                Guid result = new Guid(hash);
+                this.Id =  result;
+            }
+            */
+            this.Id = id;
+
+            this.Name = name;
+            this.Surname = surname;
+        }
+
         public static bool operator ==(Author author1, Author author2)
         {
             return author1.Name == author2.Name && author1.Surname == author2.Surname;

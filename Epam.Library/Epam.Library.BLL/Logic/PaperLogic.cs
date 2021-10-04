@@ -41,5 +41,10 @@ namespace Epam.Library.BLL
         {
            return _paperDAL.DeletePaper(guid);
         }
+
+        public bool UpdatePaper(Paper paper)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

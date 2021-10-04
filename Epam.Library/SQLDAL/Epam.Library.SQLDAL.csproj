@@ -44,8 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AuthorsForResourcesSQLDAL.cs" />
+    <Compile Include="AuthorSQLDAL.cs" />
     <Compile Include="BookSQLDAL.cs" />
+    <Compile Include="Common\AuthorWithResourceID.cs" />
     <Compile Include="IFSQLDAL.cs" />
+    <Compile Include="InformationResourceSQLDAL.cs" />
     <Compile Include="PaperSQLDAL.cs" />
     <Compile Include="PatentSQLDAL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

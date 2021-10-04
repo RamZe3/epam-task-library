@@ -11,6 +11,7 @@ namespace Epam.Library.BLL.Interfaces
     public interface IPaperLogic
     {
         List<DataValidationError> AddPaper(Paper paper);
+        bool UpdatePaper(Paper paper);
         bool DeletePaper(Guid guid);
     }
 }

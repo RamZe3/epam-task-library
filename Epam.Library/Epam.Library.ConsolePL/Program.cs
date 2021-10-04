@@ -157,9 +157,9 @@ namespace Epam.Library.ConsolePL
 
 
             List<Author> authors = new List<Author>();
-            authors.Add(new Author("ASD", "Qwe"));
-            authors.Add(new Author("As", "Qw"));
-            Book book1 = new Book("Qwe12", authors, "Saratov", "BookSar", 2000, 17, "", "ISBN 7-12-12-0");
+            authors.Add(new Author("Artem", "Ivanob"));
+            authors.Add(new Author("Ram", "Fit"));
+            Book book1 = new Book("Booksq", authors, "Saratov", "BookSar", 2000, 57, "", "ISBN 7-12-13-1");
             BookSQLDAL bookSQLDAL = new BookSQLDAL();
             //bookSQLDAL.AddBook(book1);
             //bookSQLDAL.DeleteBook(new Guid("c6e04a9d-4a3f-44d9-83fa-8050dec08e89"));
@@ -170,15 +170,31 @@ namespace Epam.Library.ConsolePL
             PaperSQLDAL paperSQLDAL = new PaperSQLDAL();
             //paperSQLDAL.AddPaper(paper);
 
-            Patent patent2 = new Patent("Iphone", authors, "Russia", 132, DateTime.Now, dateTime1, 12, "221");
+            Patent patent2 = new Patent("Iphone", authors, "Russia", 1342, DateTime.Now, dateTime1, 124, "221");
             PatentSQLDAL patentSQLDAL = new PatentSQLDAL();
-            patentSQLDAL.AddPatent(patent2);
+            //patentSQLDAL.AddPatent(patent2);
 
             //foreach (var item in patent2.Inventors)
             //{
             //    Console.WriteLine(item.Id);
             //}
             //Console.ReadLine();
+
+            Guid guid = new Guid("8d13a908-2327-430d-a982-1a4de732a627");
+            Console.WriteLine(guid);
+
+            //book1.Id = guid;
+            //bookSQLDAL.UpdateBook(book1);
+
+            IFSQLDAL iFSQLDAL = new IFSQLDAL();
+            foreach (var item in iFSQLDAL.GetLibrary())
+            {
+                Console.WriteLine(item.Name);
+            }
+
+            Console.WriteLine("Все");
+
+            Console.ReadLine();
         }
     }
 }

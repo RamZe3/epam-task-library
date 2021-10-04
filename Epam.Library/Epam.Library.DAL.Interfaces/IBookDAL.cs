@@ -10,6 +10,7 @@ namespace Epam.Library.DAL.Interfaces
     public interface IBookDAL
     {
         bool AddBook(Book book);
+        bool UpdateBook(Book book);
         bool DeleteBook(Guid id);
     }
 }

@@ -11,6 +11,7 @@ namespace Epam.Library.BLL.Interfaces
     public interface IBookLogic
     {
         List<DataValidationError> AddBook(Book book);
+        bool UpdateBook(Book book);
         bool DeleteBook(Guid guid);
     }
 }

@@ -10,6 +10,7 @@ namespace Epam.Library.DAL.Interfaces
     public interface IPaperDAL
     {
         bool AddPaper(Paper paper);
+        bool UpdatePaper(Paper paper);
         bool DeletePaper(Guid id);
     }
 }

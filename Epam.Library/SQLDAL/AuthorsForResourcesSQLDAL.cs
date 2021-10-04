@@ -8,53 +8,28 @@ using System.Threading.Tasks;
 
 namespace SQLDAL
 {
-    public class AuthorSQLDAL
+    public class AuthorsForResourcesSQLDAL
     {
         private string _connectionString = @"Data Source=DESKTOP-SL9L2I0\SQLEXPRESS;Initial Catalog=Library;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
-        public bool AddAuthor(Author author)
+        public bool AddResourceIDWithAuthorID(InformationResource resource, Author author)
         {
             using (var _connection = new SqlConnection(_connectionString))
             {
-                var AddAuthorProc = "Authors_AddAuthor";
-
-                var AddAuthorCommand = new SqlCommand(AddAuthorProc, _connection)
+                var AddAuthorIDProc = "AuthorsForResources_AddAuthorID";
+                var AddAuthorIDCommand = new SqlCommand(AddAuthorIDProc, _connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
 
-                AddAuthorCommand.Parameters.AddWithValue("@AuthorID", author.Id);
-                AddAuthorCommand.Parameters.AddWithValue("@Name", author.Name);
-                AddAuthorCommand.Parameters.AddWithValue("@SurName", author.Surname);
+                AddAuthorIDCommand.Parameters.AddWithValue("@AuthorID", author.Id);
+                AddAuthorIDCommand.Parameters.AddWithValue("@ResourceID", resource.Id);
+                AddAuthorIDCommand.Parameters.AddWithValue("@Name", author.Name);
+                AddAuthorIDCommand.Parameters.AddWithValue("@SurName", author.Surname);
 
                 _connection.Open();
 
-                AddAuthorCommand.ExecuteNonQuery();
 
-                _connection.Close();
-
-                return true;
-            }
-
-        }
-
-        public bool UpdateAuthor(Author author)
-        {
-            using (var _connection = new SqlConnection(_connectionString))
-            {
-                var AddAuthorProc = "Authors_UpdateAuthor";
-
-                var AddAuthorCommand = new SqlCommand(AddAuthorProc, _connection)
-                {
-                    CommandType = System.Data.CommandType.StoredProcedure
-                };
-
-                AddAuthorCommand.Parameters.AddWithValue("@AuthorID", author.Id);
-                AddAuthorCommand.Parameters.AddWithValue("@Name", author.Name);
-                AddAuthorCommand.Parameters.AddWithValue("@SurName", author.Surname);
-
-                _connection.Open();
-
-                AddAuthorCommand.ExecuteNonQuery();
+                AddAuthorIDCommand.ExecuteNonQuery();
 
                 _connection.Close();
 
@@ -62,9 +37,32 @@ namespace SQLDAL
             }
         }
 
-        public bool DeleteBook(Guid id)
+        public bool UpdateResourceIDWithAuthorID(Guid id)
         {
-           throw new  NotImplementedException();
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var AddAuthorIDProc = "AuthorsForResources_UpdateAuthorID";
+                var AddAuthorIDCommand = new SqlCommand(AddAuthorIDProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                AddAuthorIDCommand.Parameters.AddWithValue("@AuthorID", id);
+
+                _connection.Open();
+
+
+                AddAuthorIDCommand.ExecuteNonQuery();
+
+                _connection.Close();
+
+                return true;
+            }
+        }
+
+        public bool DeleteResourceIDWithAuthorID(Guid id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

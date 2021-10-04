@@ -27,6 +27,16 @@ namespace Epam.Library.Entities
             ISBN = iSBN;
         }
 
+        public Book(string name, Guid id, string placeOfPublication, string publisher, int yearOfPublishing, int numberOfPages, string note, string iSBN) : base(id, name)
+        {
+            this.PlaceOfPublication = placeOfPublication;
+            this.Publisher = publisher;
+            this.YearOfPublishing = yearOfPublishing;
+            this.NumberOfPages = numberOfPages;
+            this.Note = note;
+            ISBN = iSBN;
+        }
+
         public Book(string name, List<Author> authors, string placeOfPublication, string publisher, int yearOfPublishing, int numberOfPages, string note, string iSBN) : base(name)
         {
             Name = name;
@@ -38,6 +48,11 @@ namespace Epam.Library.Entities
             Note = note;
             ISBN = iSBN;
         }
+
+        //public Book(string name) : base(name)
+        //{
+
+        //}
 
         public int GetYearOfPublishing()
         {
