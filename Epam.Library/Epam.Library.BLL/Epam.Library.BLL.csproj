@@ -47,6 +47,8 @@
     <Compile Include="DateCheck\Checkers\PaperDateChecker.cs" />
     <Compile Include="DateCheck\Checkers\PatentDateChecker.cs" />
     <Compile Include="DateCheck\IDataValidator.cs" />
+    <Compile Include="LogicWithRoles\IRLogicWithRoles.cs" />
+    <Compile Include="LogicWithRoles\UserRollProvider.cs" />
     <Compile Include="Logic\BookLogic.cs" />
     <Compile Include="Logic\InformationResourceLogic.cs" />
     <Compile Include="Logic\PaperLogic.cs" />
@@ -71,5 +73,6 @@
       <Name>Epam.Library.Entities</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

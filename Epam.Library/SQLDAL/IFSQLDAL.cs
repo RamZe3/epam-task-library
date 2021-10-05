@@ -89,23 +89,12 @@ namespace Epam.Library.SQLDAL
                                 yearOfPublishing: ((DateTime)reader["YearOfPublishing"]).Year,
                                 iSBN: reader["ISBN"] as string
                                 );
-                            //resources.Add(new Book(
-                            //    name: reader["Name"] as string,
-                            //    id: (Guid)reader["ID"],
-                            //    numberOfPages: (int)reader["NumberOfPages"],
-                            //    note: reader["Note"] as string,
-                            //    placeOfPublication: reader["PlaceOfPublication"] as string,
-                            //    publisher: reader["Publisher"] as string,
-                            //    yearOfPublishing: ((DateTime)reader["YearOfPublishing"]).Year,
-                            //    iSBN: reader["ISBN"] as string
-                            //    ));
 
                             foreach (var author in authorWithResourceIDs)
                             {
                                 if (author.ResourceId == (Guid)reader["ID"])
                                 {
                                     book.Authors.Add(author.author);
-                                    //authorWithResourceIDs.Remove(author);
                                 }
                             }
 
@@ -127,7 +116,6 @@ namespace Epam.Library.SQLDAL
                                 if (author.ResourceId == (Guid)reader["ID"])
                                 {
                                     patent.Inventors.Add(author.author);
-                                    //authorWithResourceIDs.Remove(author);
                                 }
                             }
                             resources.Add(patent);
@@ -150,13 +138,7 @@ namespace Epam.Library.SQLDAL
                         default:
                             break;
                     }
-                    Console.WriteLine(reader["Type"] as string);
-                    //return new ForumPost(
-                    //    id: (Guid)reader["Id"],
-                    //    text: reader["Text"] as string,
-                    //   publicationDate: (DateTime)reader["PublicationDate"],
-                    //   authorId: (Guid)reader["AuthorId"],
-                    //   themeId: (Guid)reader["ThemeId"]);
+                    //Console.WriteLine(reader["Type"] as string);
                 }
 
                 
@@ -171,7 +153,119 @@ namespace Epam.Library.SQLDAL
 
         public List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse)
         {
-            throw new NotImplementedException();
+            List<InformationResource> resources = new List<InformationResource>();
+
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "Resources_GetSortedLibraryByYearOfPublishing";
+                var srProcAuthors = "Authors_GetAuthors";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                var Authorscommand = new SqlCommand(srProcAuthors, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                _connection.Open();
+
+                List<AuthorWithResourceID> authorWithResourceIDs = new List<AuthorWithResourceID>();
+                var Authorreader = Authorscommand.ExecuteReader();
+                while (Authorreader.Read())
+                {
+                    Guid ResourceId = (Guid)Authorreader["ResourceID"];
+                    Author author = new Author(
+                        id: (Guid)Authorreader["AuthorID"],
+                        name: Authorreader["Name"] as string,
+                        surname: Authorreader["SurName"] as string
+                        );
+                    authorWithResourceIDs.Add(new AuthorWithResourceID(ResourceId, author));
+                }
+                Authorreader.Close();
+
+                var reader = command.ExecuteReader();
+
+
+
+                while (reader.Read())
+                {
+                    String Type = reader["Type"] as string;
+                    switch (Type)
+                    {
+                        case "Book":
+                            Book book = new Book(
+                                name: reader["Name"] as string,
+                                id: (Guid)reader["ID"],
+                                numberOfPages: (int)reader["NumberOfPages"],
+                                note: reader["Note"] as string,
+                                placeOfPublication: reader["PlaceOfPublication"] as string,
+                                publisher: reader["Publisher"] as string,
+                                yearOfPublishing: ((DateTime)reader["YearOfPublishing"]).Year,
+                                iSBN: reader["ISBN"] as string
+                                );
+
+                            foreach (var author in authorWithResourceIDs)
+                            {
+                                if (author.ResourceId == (Guid)reader["ID"])
+                                {
+                                    book.Authors.Add(author.author);
+                                }
+                            }
+
+                            resources.Add(book);
+                            break;
+                        case "Patent":
+                            Patent patent = new Patent(
+                                name: reader["Name"] as string,
+                                id: (Guid)reader["ID"],
+                                numberOfPages: (int)reader["NumberOfPages"],
+                                note: reader["Note"] as string,
+                                country: reader["Country"] as string,
+                                dateOfApplication: (DateTime)reader["DateOfApplication"],
+                                dateOfPublication: ((DateTime)reader["DateOfPublication"]),
+                                registrationNumber: (int)reader["RegistrationNumber"]
+                                );
+                            foreach (var author in authorWithResourceIDs)
+                            {
+                                if (author.ResourceId == (Guid)reader["ID"])
+                                {
+                                    patent.Inventors.Add(author.author);
+                                }
+                            }
+                            resources.Add(patent);
+                            break;
+                        case "Paper":
+                            Paper paper = new Paper(
+                                name: reader["Name"] as string,
+                                id: (Guid)reader["ID"],
+                                numberOfPages: (int)reader["NumberOfPages"],
+                                note: reader["Note"] as string,
+                                placeOfPublication: reader["PlaceOfPublication"] as string,
+                                publisher: reader["Publisher"] as string,
+                                yearOfPublishing: ((DateTime)reader["YearOfPublishing"]).Year,
+                                number: (int)reader["Number"],
+                                date: (DateTime)reader["Date"],
+                                iSSN: reader["ISSN"] as string
+                                );
+                            resources.Add(paper);
+                            break;
+                        default:
+                            break;
+                    }
+                    //Console.WriteLine(reader["Type"] as string);
+                }
+
+
+
+                //command.ExecuteNonQuery();
+
+                _connection.Close();
+
+                return resources;
+            }
         }
 
         public Dictionary<int, List<InformationResource>> GroupingResourceByYearOfPublication()
