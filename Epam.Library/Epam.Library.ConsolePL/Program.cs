@@ -10,6 +10,8 @@ using Epam.Library.BLL.Interfaces;
 using Epam.Library.Entities.Interfaces;
 using Epam.Library.Entities.Exceptions;
 using Epam.Library.SQLDAL;
+using Epam.Library.BLL.Interfaces.Roles_system;
+using Epam.Library.BLL.LogicWithRoles;
 
 namespace Epam.Library.ConsolePL
 {
@@ -156,43 +158,60 @@ namespace Epam.Library.ConsolePL
 
 
 
+            //List<Author> authors = new List<Author>();
+            //authors.Add(new Author("Artem", "Ivanob"));
+            //authors.Add(new Author("Ram", "Fit"));
+            //Book book1 = new Book("Booksq", authors, "Saratov", "BookSar", 2000, 57, "", "ISBN 7-12-13-1");
+            //BookSQLDAL bookSQLDAL = new BookSQLDAL();
+            ////bookSQLDAL.AddBook(book1);
+            ////bookSQLDAL.DeleteBook(new Guid("c6e04a9d-4a3f-44d9-83fa-8050dec08e89"));
+
+
+            //DateTime dateTime1 = new DateTime(1900, 2, 1);
+            //Paper paper = new Paper("Azbuka", "Saratov", "PaperEnt", 2021, 1223, "Paper", 12223, dateTime1, "ISSN 1233-1213");
+            //PaperSQLDAL paperSQLDAL = new PaperSQLDAL();
+            ////paperSQLDAL.AddPaper(paper);
+
+            //Patent patent2 = new Patent("Iphone", authors, "Russia", 1342, DateTime.Now, dateTime1, 124, "221");
+            //PatentSQLDAL patentSQLDAL = new PatentSQLDAL();
+            ////patentSQLDAL.AddPatent(patent2);
+
+            ////foreach (var item in patent2.Inventors)
+            ////{
+            ////    Console.WriteLine(item.Id);
+            ////}
+            ////Console.ReadLine();
+
+            //Guid guid = new Guid("8d13a908-2327-430d-a982-1a4de732a627");
+            //Console.WriteLine(guid);
+
+            ////book1.Id = guid;
+            ////bookSQLDAL.UpdateBook(book1);
+
+            //IFSQLDAL iFSQLDAL = new IFSQLDAL();
+            //foreach (var item in iFSQLDAL.FindPatentsAndBooksByAuthor(new Author("Ram", "Fit")))
+            //{
+            //    Console.WriteLine(item.Name);
+            //}
+
+            //Console.WriteLine("Все");
+
             List<Author> authors = new List<Author>();
             authors.Add(new Author("Artem", "Ivanob"));
             authors.Add(new Author("Ram", "Fit"));
             Book book1 = new Book("Booksq", authors, "Saratov", "BookSar", 2000, 57, "", "ISBN 7-12-13-1");
-            BookSQLDAL bookSQLDAL = new BookSQLDAL();
-            bookSQLDAL.AddBook(book1);
-            //bookSQLDAL.DeleteBook(new Guid("c6e04a9d-4a3f-44d9-83fa-8050dec08e89"));
 
+            //DependenciesResolver dependenciesResolver = new DependenciesResolver();
+            ////IBooksLogicWithRoles Logic = dependenciesResolver.booksLogicWithRoles;
+            //User user = new User(Guid.NewGuid() ,"Asd", "qwe", "admin");
+            //Logic.AddBook(user, book1);
 
-            DateTime dateTime1 = new DateTime(1900, 2, 1);
-            Paper paper = new Paper("Azbuka", "Saratov", "PaperEnt", 2021, 1223, "Paper", 12223, dateTime1, "ISSN 1233-1213");
-            PaperSQLDAL paperSQLDAL = new PaperSQLDAL();
-            paperSQLDAL.AddPaper(paper);
-
-            Patent patent2 = new Patent("Iphone", authors, "Russia", 1342, DateTime.Now, dateTime1, 124, "221");
-            PatentSQLDAL patentSQLDAL = new PatentSQLDAL();
-            patentSQLDAL.AddPatent(patent2);
-
-            //foreach (var item in patent2.Inventors)
-            //{
-            //    Console.WriteLine(item.Id);
-            //}
-            //Console.ReadLine();
-
-            Guid guid = new Guid("8d13a908-2327-430d-a982-1a4de732a627");
-            Console.WriteLine(guid);
-
-            //book1.Id = guid;
-            //bookSQLDAL.UpdateBook(book1);
-
-            IFSQLDAL iFSQLDAL = new IFSQLDAL();
-            foreach (var item in iFSQLDAL.GetSortedLibraryByYearOfPublishing(true))
-            {
-                Console.WriteLine(item.Name);
-            }
-
-            Console.WriteLine("Все");
+            DependenciesResolver dependenciesResolver = new DependenciesResolver();
+            User user = new User("administrator", "123");
+            UserRollProvider userRollProvider = new UserRollProvider(user);
+            dependenciesResolver.UserRollProvider = userRollProvider;
+            IBookLogic Logic = dependenciesResolver.booksLogicWithRoles;
+            Logic.AddBook(book1);
 
             Console.ReadLine();
         }

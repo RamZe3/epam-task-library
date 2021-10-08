@@ -1,4 +1,6 @@
-﻿using Epam.Library.Entities;
+﻿using Epam.Library.BLL.Interfaces.Roles_system;
+using Epam.Library.Entities;
+using SQLDAL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,54 +9,85 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.BLL.LogicWithRoles
 {
-    public class UserRollProvider
+    public class UserRollProvider : IUsersLogic
     {
-        public bool CheckRegister(User user)
+        public User user;
+        private UsersSQLDAL UsersSQLDAL = new UsersSQLDAL();
+
+        public UserRollProvider(User user)
         {
-            if (user.IsRegister)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            this.user = GetUserFromDataBase(user.Name, user.Password);
         }
 
-        //RolesCheckers
+        public UserRollProvider()
+        {
+        }
 
-        public bool UserInRoleAdmin(User user)
+        public User GetUserFromDataBase(string name, string pass)
+        {
+            User userFromBase = UsersSQLDAL.GetUser(name, pass);
+            if (userFromBase.id == null)
+            {
+                throw new Exception();
+            }
+            return UsersSQLDAL.GetUser(name, pass);
+        }
+
+        public bool UserInRoleUser()
+        {
+            return user.Roles.Contains("user");
+        }
+
+        public bool UserInRoleAdmin()
         {
             return user.Roles.Contains("admin");
         }
 
-        public bool UserInRoleLibrarian(User user)
+        public bool UserInRoleLibrarian()
         {
-            return user.Roles.Contains("admin") ||
-               user.Roles.Contains("librarian");
+            return user.Roles.Contains("librarian");
         }
 
-        public bool UserInRoleUser(User user)
+        public bool AddUser(User user)
         {
-            return user.Roles.Contains("admin") ||
-               user.Roles.Contains("librarian") ||
-               user.Roles.Contains("user");
+             return UsersSQLDAL.AddUser(user);
         }
 
-        //Rights checker
-        public bool CheckUserInRoleRights(User user, string role)
+        public bool DeleteUser(Guid id)
         {
-            switch (role)
-            {
-                case "librarian":
-                     return UserInRoleLibrarian(user);
-                case "user":
-                    return UserInRoleUser(user);
-                case "admin":
-                    return UserInRoleAdmin(user);
-                default:
-                    return false;
-            }
+            if (UserInRoleAdmin())
+                return UsersSQLDAL.DeleteUser(id);
+            else
+                throw new Exception();
+        }
+
+        public bool AddRole(Guid id, string role)
+        {
+            if (UserInRoleAdmin())
+                return UsersSQLDAL.AddRole(id, role);
+            else
+                throw new Exception();
+        }
+
+        public bool DeleteRole(Guid id, string role)
+        {
+            if (UserInRoleAdmin())
+                return UsersSQLDAL.DeleteRole(id, role);
+            else
+                throw new Exception();
+        }
+
+        public bool DeleteAllRoleForUser(Guid id, string role)
+        {
+            throw new NotImplementedException();
+        }
+
+        public User GetUser(string UserName, string UserPass)
+        {
+            if (UserInRoleAdmin())
+                return UsersSQLDAL.GetUser(UserName, UserPass);
+            else
+                throw new Exception();
         }
     }
 }

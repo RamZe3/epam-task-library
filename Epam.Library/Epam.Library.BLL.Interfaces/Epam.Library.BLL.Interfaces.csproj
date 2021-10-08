@@ -46,6 +46,8 @@
     <Compile Include="IPaperLogic.cs" />
     <Compile Include="IPatentLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Roles system\IResourceLogic.cs" />
+    <Compile Include="Roles system\IUsersLogic.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epam.Library.Entities\Epam.Library.Entities.csproj">

@@ -12,7 +12,6 @@ namespace Epam.Library.Entities
         public string Name { get; set; }
         public string Password { get; set; }
         public List<string> Roles { get; set; } = new List<string>();
-        public bool IsRegister { get; set; } = false;
 
         public User(Guid id, string name, string password, List<string> roles)
         {
@@ -20,7 +19,14 @@ namespace Epam.Library.Entities
             Name = name;
             Password = password;
             Roles = roles;
-            IsRegister = true;
+        }
+
+        public User(Guid id, string name, string password, string role)
+        {
+            this.id = id;
+            Name = name;
+            Password = password;
+            Roles.Add(role);
         }
 
         public User(string name, string password, List<string> roles)
@@ -29,7 +35,24 @@ namespace Epam.Library.Entities
             Name = name;
             Password = password;
             Roles = roles;
-            IsRegister = true;
+        }
+
+        public User(string name, string password)
+        {
+            this.id = Guid.NewGuid();
+            Name = name;
+            Password = password;
+        }
+
+        public User(Guid id, string name, string password)
+        {
+            this.id = id;
+            Name = name;
+            Password = password;
+        }
+
+        public User()
+        {
         }
     }
 }

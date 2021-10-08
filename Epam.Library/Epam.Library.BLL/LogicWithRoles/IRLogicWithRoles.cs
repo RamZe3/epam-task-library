@@ -1,4 +1,5 @@
 ﻿using Epam.Library.BLL.Interfaces;
+using Epam.Library.BLL.Interfaces.Roles_system;
 using Epam.Library.DAL.Interfaces;
 using Epam.Library.Entities;
 using System;
@@ -9,65 +10,58 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.BLL.LogicWithRoles
 {
-    public class IRLogicWithRoles : InformationResourceLogic
+    public class IRLogicWithRoles : IInformationResourceLogic
     {
-        private UserRollProvider UserRollProvider = new UserRollProvider();
+        //TODO IIRLogicWithRoles
+        IInformationResourceLogic InformationResourceLogic;
+        private UserRollProvider UserRollProvider;
 
-        public IRLogicWithRoles(IInformationResourceDAL informationResourceDAL) : base(informationResourceDAL)
+        public IRLogicWithRoles(IInformationResourceLogic informationResourceLogic, UserRollProvider userRollProvider)
         {
-
+            InformationResourceLogic = informationResourceLogic;
+            UserRollProvider = userRollProvider;
         }
 
-        public List<Book> FindBooksByAuthor(User user, string role ,Author author)
+        public List<Book> FindBooksByAuthor(Author author)
         {
-            if (UserRollProvider.CheckRegister(user))
-            {
-                throw new Exception();
-            }
-
-            if (UserRollProvider.CheckUserInRoleRights(user, "user"))
-            {
-                return base.FindBooksByAuthor(author);
-            }
-            else
-            {
-                throw new Exception();
-            }
+            return InformationResourceLogic.FindBooksByAuthor(author);
         }
 
         public List<InformationResource> FindPatentsAndBooksByAuthor(Author author)
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.FindPatentsAndBooksByAuthor(author);
         }
 
         public List<Patent> FindPatentsByAuthor(Author author)
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.FindPatentsByAuthor(author);
         }
 
         public List<InformationResource> FindResourcesByName(string name)
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.FindResourcesByName(name);
         }
 
         public List<InformationResource> GetLibrary()
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.GetLibrary();
         }
 
         public List<InformationResource> GetSortedLibraryByYearOfPublishing(bool reverse)
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.GetSortedLibraryByYearOfPublishing(reverse);
         }
 
         public Dictionary<int, List<InformationResource>> GroupingResourceByYearOfPublication()
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.GroupingResourceByYearOfPublication();
         }
 
         public Dictionary<string, List<Book>> SmartBookSearchByPublisher(string str)
         {
-            throw new NotImplementedException();
+            return InformationResourceLogic.SmartBookSearchByPublisher(str);
         }
+
+        
     }
 }

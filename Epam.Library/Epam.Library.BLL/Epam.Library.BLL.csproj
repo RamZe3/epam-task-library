@@ -47,7 +47,11 @@
     <Compile Include="DateCheck\Checkers\PaperDateChecker.cs" />
     <Compile Include="DateCheck\Checkers\PatentDateChecker.cs" />
     <Compile Include="DateCheck\IDataValidator.cs" />
+    <Compile Include="LogicWithRoles\BooksLogicWithRoles.cs" />
     <Compile Include="LogicWithRoles\IRLogicWithRoles.cs" />
+    <Compile Include="LogicWithRoles\PapersLogicWithRoles.cs" />
+    <Compile Include="LogicWithRoles\PatentsLogicWithRoles.cs" />
+    <Compile Include="LogicWithRoles\ResourceLogicWithRoles.cs" />
     <Compile Include="LogicWithRoles\UserRollProvider.cs" />
     <Compile Include="Logic\BookLogic.cs" />
     <Compile Include="Logic\InformationResourceLogic.cs" />
@@ -71,6 +75,10 @@
     <ProjectReference Include="..\Epam.Library.Entities\Epam.Library.Entities.csproj">
       <Project>{20E49E45-EF38-4F84-9560-072AB99291C3}</Project>
       <Name>Epam.Library.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SQLDAL\Epam.Library.SQLDAL.csproj">
+      <Project>{637dd0b0-6dc8-4092-a2ba-2280ff7b27d2}</Project>
+      <Name>Epam.Library.SQLDAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

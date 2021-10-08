@@ -19,26 +19,6 @@ namespace Epam.Library.SQLDAL
         private AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL();
         public bool AddBook(Book book)
         {
-            //using (var _connection = new SqlConnection(_connectionString))
-            //{
-            //    var query = "INSERT INTO dbo.Resouces(Type, ID, Name, NumberOfPages, Note) " +
-            //        "VALUES(@Type, @ID, @Name, @NumberOfPages, @Note)";
-            //    var command = new SqlCommand(query, _connection);
-
-            //    command.Parameters.AddWithValue("@Type", "Book");
-            //    command.Parameters.AddWithValue("@Id", book.Id);
-            //    command.Parameters.AddWithValue("@Name", book.Name);
-            //    command.Parameters.AddWithValue("@NumberOfPages", book.NumberOfPages);
-            //    command.Parameters.AddWithValue("@Note", book.Note);
-
-            //    _connection.Open();
-
-            //    command.ExecuteNonQuery();
-
-            //    _connection.Close();
-
-            //    return true;
-            //}
 
             using (var _connection = new SqlConnection(_connectionString))
             {
@@ -73,7 +53,8 @@ namespace Epam.Library.SQLDAL
 
                 _connection.Open();
 
-                command.ExecuteNonQuery();
+                if(command.ExecuteNonQuery() == -1)
+                    Console.WriteLine("Ошибка");
 
                 _connection.Close();
 
