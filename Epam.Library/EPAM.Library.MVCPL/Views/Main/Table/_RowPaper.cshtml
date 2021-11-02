@@ -1,0 +1,18 @@
+﻿@model Epam.Library.Entities.Paper
+
+<tr>
+    <td>
+        @Html.ActionLink(Model.Name, "Card", new { id = Model.Id })
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.ISSN);
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.NumberOfPages)
+    </td>
+    <td>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Details", "Card", new { id = Model.Id }) |
+        @Html.ActionLink("Delete", "Delete", new { id = Model.Id })
+    </td>
+</tr>

@@ -1,0 +1,35 @@
+﻿@model IEnumerable<EPAM.Library.MVCPL.ViewModels.User.DisplayUserVM>
+
+@{
+    ViewBag.Title = "GetUsers";
+}
+
+<h2>GetUsers</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>@Html.DisplayNameFor(model => model.Roles)</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @foreach (var role in item.Roles)
+            {
+                @Html.DisplayFor(model => role)
+            }
+        </td>
+        <td>
+            @Html.ActionLink("Add role", "AddRole", new { id=item.Id }) |
+            @Html.ActionLink("Delete role", "DeleteRole", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

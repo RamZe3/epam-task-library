@@ -1,0 +1,28 @@
+﻿@model EPAM.Library.MVCPL.ViewModels.Resource.DisplayResourceVM
+
+@{
+    ViewBag.Title = "GetLibrary";
+}
+
+<h2>GetLibrary</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Identifier)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NumberOfPages)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach(var resource in Model.Resources)
+    {
+        @Html.Action("CreateRow", new { resource = resource })
+    }
+
+</table>

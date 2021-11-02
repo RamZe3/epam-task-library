@@ -1,6 +1,7 @@
 ﻿using Epam.Library.BLL.Interfaces.Roles_system;
 using Epam.Library.DAL.Interfaces;
 using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using Epam.Library.SQLDAL;
 using SQLDAL;
 using System;
@@ -33,7 +34,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
     }
 }

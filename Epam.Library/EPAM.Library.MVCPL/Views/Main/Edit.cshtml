@@ -1,0 +1,12 @@
+﻿@model Guid
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+@Html.Action("CreateEdit", new { id = Model })

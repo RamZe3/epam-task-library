@@ -44,7 +44,7 @@ namespace Epam.Library.BLL
 
         public bool UpdatePaper(Paper paper)
         {
-            throw new NotImplementedException();
+            return _paperDAL.UpdatePaper(paper);
         }
     }
 }

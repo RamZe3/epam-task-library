@@ -45,6 +45,14 @@ namespace Epam.Library.Entities
             this.Surname = surname;
         }
 
+        public Author()
+        {
+            this.Id = Guid.NewGuid();
+
+            this.Name = "Test";
+            this.Surname = "Test";
+        }
+
         public static bool operator ==(Author author1, Author author2)
         {
             return author1.Name == author2.Name && author1.Surname == author2.Surname;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Epam.Library.Entities
 {
-    public abstract class InformationResource
+    public class InformationResource
     {
         public Guid Id { get; set; }
         public string Name { get; set; }

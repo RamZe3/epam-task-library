@@ -12,6 +12,7 @@ using Epam.Library.Entities.Exceptions;
 using Epam.Library.SQLDAL;
 using Epam.Library.BLL.Interfaces.Roles_system;
 using Epam.Library.BLL.LogicWithRoles;
+using System.Security.Cryptography;
 
 namespace Epam.Library.ConsolePL
 {
@@ -197,10 +198,11 @@ namespace Epam.Library.ConsolePL
             //Console.WriteLine("Все");
 
             List<Author> authors = new List<Author>();
-            authors.Add(new Author("Artem", "Ivanob"));
-            authors.Add(new Author("Ram", "Fit"));
-            Book book1 = new Book("Booksq", authors, "Saratov", "BookSar", 2000, 57, "", "ISBN 7-12-13-1");
-
+            //authors.Add(new Author("Sahsa", "Ivanob"));
+            //authors.Add(new Author("Ram", "Fit"));
+            authors.Add(new Author("Test", "Test"));
+            Book book1 = new Book("TestEditBook3", authors, "Saratov", "BookSar", 2000, 57, "", "ISBN 7-12-13-7");
+            book1.Id = new Guid("6aefca78-1cac-4c36-bac6-79b222feb664");
             //DependenciesResolver dependenciesResolver = new DependenciesResolver();
             ////IBooksLogicWithRoles Logic = dependenciesResolver.booksLogicWithRoles;
             //User user = new User(Guid.NewGuid() ,"Asd", "qwe", "admin");
@@ -211,8 +213,61 @@ namespace Epam.Library.ConsolePL
             UserRollProvider userRollProvider = new UserRollProvider(user);
             dependenciesResolver.UserRollProvider = userRollProvider;
             IBookLogic Logic = dependenciesResolver.booksLogicWithRoles;
-            Logic.AddBook(book1);
+            Logic.UpdateBook(book1);
+            //Logic.DeleteBook(new Guid("42ae7c8c-6e0d-4520-86d5-a0d10536f552"));
 
+            //DateTime dateTime1 = new DateTime(1900, 2, 1);
+            //Paper paper = new Paper("Azbuka", "Saratov", "PaperEnt", 2021, 1223, "Paper", 12223, dateTime1, "ISSN 1233-1213");
+            //PaperSQLDAL paperSQLDAL = new PaperSQLDAL();
+            //paperSQLDAL.AddPaper(paper);
+
+            //Patent patent2 = new Patent("Iphone", authors, "Russia", 1342, dateTime1, DateTime.Now, 124, "12");
+            //PatentSQLDAL patentSQLDAL = new PatentSQLDAL();
+            //IPatentLogic pLogic = dependenciesResolver.patentLogic;
+            //pLogic.AddPatent(patent2);
+            
+
+            foreach (var item in dependenciesResolver.InformationResourceLogic.GetLibrary())
+            {
+                Console.WriteLine(item.Name);
+            }
+            Console.WriteLine();
+
+            foreach (var item in dependenciesResolver.authorSQLDAL.GetAuthors())
+            {
+                Console.WriteLine(item.Id + " " + item.Name + " " + item.Surname);
+            }
+
+            Console.WriteLine();
+            foreach (var user1 in dependenciesResolver.UserRollProvider.GetUsers())
+            {
+                Console.WriteLine(user1.Name + " " + user1.Password);
+                foreach (var role in user1.Roles)
+                {
+                    Console.Write(role + " ");
+                }
+                Console.WriteLine();
+            }
+
+            byte[] data = Encoding.UTF8.GetBytes("12");
+            byte[] hash;
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                hash = shaM.ComputeHash(data, 0, 16);
+            }
+
+            foreach (var item in hash)
+            {
+                Console.Write(item);
+            }
+
+            Console.WriteLine();
+            using (SHA512 shaM = new SHA512Managed())
+            {
+                Console.WriteLine(shaM.HashSize);
+                byte[] hash1 = shaM.ComputeHash(Encoding.Default.GetBytes("123"));
+                Console.WriteLine(hash1);
+            }
             Console.ReadLine();
         }
     }

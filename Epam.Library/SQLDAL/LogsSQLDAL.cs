@@ -36,7 +36,7 @@ namespace SQLDAL
                     type = "Patent";
                 }
 
-                command.Parameters.AddWithValue("@ID", resource.Id);
+                command.Parameters.AddWithValue("@ResourceID", resource.Id);
                 command.Parameters.AddWithValue("@Description", description);
                 command.Parameters.AddWithValue("@UserName", user.Name);
                 command.Parameters.AddWithValue("@Type", type);
@@ -63,7 +63,7 @@ namespace SQLDAL
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
 
-                command.Parameters.AddWithValue("@ID", resourceID);
+                command.Parameters.AddWithValue("@ResourceID", resourceID);
                 command.Parameters.AddWithValue("@Description", description);
                 command.Parameters.AddWithValue("@UserName", user.Name);
                 command.Parameters.AddWithValue("@Type", type);

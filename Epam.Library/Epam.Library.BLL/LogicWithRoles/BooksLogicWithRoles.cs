@@ -34,7 +34,7 @@ namespace Epam.Library.BLL.LogicWithRoles
                 return bookLogic.AddBook(book);
             }
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
 
         public bool DeleteBook(Guid id)
@@ -45,8 +45,8 @@ namespace Epam.Library.BLL.LogicWithRoles
                 return bookLogic.DeleteBook(id);
             }
             else
-                throw new Exception();
-            
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
+
         }
 
         public bool UpdateBook(Book book)
@@ -58,8 +58,8 @@ namespace Epam.Library.BLL.LogicWithRoles
                 return bookLogic.UpdateBook(book);
             }
             else
-                throw new Exception();
-            
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
+
         }
     }
 }

@@ -47,6 +47,17 @@ namespace Epam.Library.Entities
             Note = note;
         }
 
+        public Patent(string name, string country, int registrationNumber, DateTime dateOfApplication, DateTime dateOfPublication, int numberOfPages, string note) : base(name)
+        {
+            Id = Guid.NewGuid();
+            Country = country;
+            RegistrationNumber = registrationNumber;
+            DateOfApplication = dateOfApplication;
+            DateOfPublication = dateOfPublication;
+            NumberOfPages = numberOfPages;
+            Note = note;
+        }
+
         public int GetYearOfPublishing()
         {
             return DateOfPublication.Year;

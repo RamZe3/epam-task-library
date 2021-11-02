@@ -43,7 +43,7 @@ namespace Epam.Library.BLL
 
         public bool UpdatePatent(Patent patent)
         {
-            throw new NotImplementedException();
+            return _patentDAL.UpdatePatent(patent);
         }
     }
 }

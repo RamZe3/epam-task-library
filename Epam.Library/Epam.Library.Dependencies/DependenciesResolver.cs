@@ -30,10 +30,11 @@ namespace Epam.Library.Dependencies
             }
         }
 
-        public IInformationResourceDAL InformationResourceDAL => new RAMMemory();
+        public IInformationResourceDAL InformationResourceDAL => new IFSQLDAL();
         public IBookDAL bookDAL => new BookSQLDAL();
         public IPaperDAL paperDAL => new PaperSQLDAL();
         public IPatentDAL patentDAL => new PatentSQLDAL();
+        public AuthorSQLDAL authorSQLDAL => new AuthorSQLDAL();
 
         public IInformationResourceLogic InformationResourceLogic => new InformationResourceLogic(InformationResourceDAL);
         public IBookLogic bookLogic => new BookLogic(bookDAL);
@@ -51,6 +52,6 @@ namespace Epam.Library.Dependencies
         public IPaperLogic papersLogicWithRoles => new PapersLogicWithRoles(paperLogic, UserRollProvider);
         public IPatentLogic patentsLogicWithRoles => new PatentsLogicWithRoles(patentLogic, UserRollProvider);
         public IResourceLogic iRLogicWithRoles => new ResourceLogicWithRoles(resourceDAL, UserRollProvider);
-        public IInformationResourceLogic informationResourceLogic => new IRLogicWithRoles(informationResourceLogic, UserRollProvider);
+        public IInformationResourceLogic informationResourceLogic => new IRLogicWithRoles(InformationResourceLogic, UserRollProvider);
     }
 }

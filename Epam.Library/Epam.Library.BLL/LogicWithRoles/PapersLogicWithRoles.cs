@@ -33,7 +33,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
 
         public bool DeletePaper(Guid id)
@@ -45,7 +45,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
 
         public bool UpdatePaper(Paper paper)
@@ -58,8 +58,8 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
-            
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
+
         }
     }
 }

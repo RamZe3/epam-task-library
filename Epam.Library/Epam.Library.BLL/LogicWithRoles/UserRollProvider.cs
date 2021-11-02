@@ -1,5 +1,6 @@
 ﻿using Epam.Library.BLL.Interfaces.Roles_system;
 using Epam.Library.Entities;
+using Epam.Library.Entities.Exceptions;
 using SQLDAL;
 using System;
 using System.Collections.Generic;
@@ -26,11 +27,7 @@ namespace Epam.Library.BLL.LogicWithRoles
         public User GetUserFromDataBase(string name, string pass)
         {
             User userFromBase = UsersSQLDAL.GetUser(name, pass);
-            if (userFromBase.id == null)
-            {
-                throw new Exception();
-            }
-            return UsersSQLDAL.GetUser(name, pass);
+            return userFromBase;
         }
 
         public bool UserInRoleUser()
@@ -50,6 +47,7 @@ namespace Epam.Library.BLL.LogicWithRoles
 
         public bool AddUser(User user)
         {
+            user.Roles.Add("user");
              return UsersSQLDAL.AddUser(user);
         }
 
@@ -58,7 +56,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             if (UserInRoleAdmin())
                 return UsersSQLDAL.DeleteUser(id);
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(user.Name);
         }
 
         public bool AddRole(Guid id, string role)
@@ -66,7 +64,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             if (UserInRoleAdmin())
                 return UsersSQLDAL.AddRole(id, role);
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(user.Name);
         }
 
         public bool DeleteRole(Guid id, string role)
@@ -74,12 +72,15 @@ namespace Epam.Library.BLL.LogicWithRoles
             if (UserInRoleAdmin())
                 return UsersSQLDAL.DeleteRole(id, role);
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(user.Name);
         }
 
         public bool DeleteAllRoleForUser(Guid id, string role)
         {
-            throw new NotImplementedException();
+            if (UserInRoleAdmin())
+                return UsersSQLDAL.DeleteAllRoleForUser(id, role);
+            else
+                throw new LackOfUserRightsException(user.Name);
         }
 
         public User GetUser(string UserName, string UserPass)
@@ -87,7 +88,12 @@ namespace Epam.Library.BLL.LogicWithRoles
             if (UserInRoleAdmin())
                 return UsersSQLDAL.GetUser(UserName, UserPass);
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(user.Name);
+        }
+
+        public List<User> GetUsers()
+        {
+            return UsersSQLDAL.GetUsers();
         }
     }
 }

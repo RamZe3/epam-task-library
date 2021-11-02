@@ -49,6 +49,20 @@ namespace Epam.Library.Entities
             ISBN = iSBN;
         }
 
+        public Book(string name, string placeOfPublication, string publisher, int yearOfPublishing, int numberOfPages, string note, string iSBN) : base(name)
+        {
+            Id = Guid.NewGuid();
+            Name = name;
+            PlaceOfPublication = placeOfPublication;
+            Publisher = publisher;
+            YearOfPublishing = yearOfPublishing;
+            NumberOfPages = numberOfPages;
+            Note = note;
+            ISBN = iSBN;
+        }
+
+
+
         //public Book(string name) : base(name)
         //{
 

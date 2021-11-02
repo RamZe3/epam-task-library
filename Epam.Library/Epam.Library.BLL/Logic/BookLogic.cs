@@ -43,7 +43,7 @@ namespace Epam.Library.BLL
 
         public bool UpdateBook(Book book)
         {
-            throw new NotImplementedException();
+            return _bookDAL.UpdateBook(book);
         }
     }
 }

@@ -23,11 +23,6 @@ namespace SQLDAL
                     CommandType = System.Data.CommandType.StoredProcedure
                 };
 
-                foreach (var role in user.Roles)
-                {
-                    AddRole(user.id, role);
-                }
-
                 command.Parameters.AddWithValue("@UserID", user.id);
                 command.Parameters.AddWithValue("@UserName", user.Name);
                 command.Parameters.AddWithValue("@UserPass", user.Password);
@@ -37,6 +32,11 @@ namespace SQLDAL
                 command.ExecuteNonQuery();
 
                 _connection.Close();
+
+                foreach (var role in user.Roles)
+                {
+                    AddRole(user.id, role);
+                }
 
                 return true;
             }
@@ -223,6 +223,61 @@ namespace SQLDAL
                 _connection.Close();
 
                 return user;
+            }
+        }
+
+        public List<User> GetUsers()
+        {
+            List<User> users = new List<User>();
+
+            using (var _connection = new SqlConnection(_connectionString))
+            {
+                var stProc = "Users_GetUsers";
+
+                var command = new SqlCommand(stProc, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                _connection.Open();
+
+                var reader = command.ExecuteReader();
+
+
+
+                while (reader.Read())
+                {
+                    users.Add(new User(
+                        id: (Guid)reader["UserID"],
+                        name: reader["UserName"] as string,
+                        password: reader["UserPass"] as string));
+                }
+
+                reader.Close();
+
+                var stProcRoles = "RolesForUsers_GetRoles";
+
+                var commandRoles = new SqlCommand(stProcRoles, _connection)
+                {
+                    CommandType = System.Data.CommandType.StoredProcedure
+                };
+
+                for (int i = 0; i < users.Count; i++)
+                {
+                    commandRoles.Parameters.AddWithValue("@UserID", users[i].id);
+                    var readerRoles = commandRoles.ExecuteReader();
+                    while (readerRoles.Read())
+                    {
+                        users[i].Roles.Add(readerRoles["RoleName"] as string);
+                    }
+
+                    readerRoles.Close();
+                    commandRoles.Parameters.Clear();
+                }
+
+                _connection.Close();
+
+                return users;
             }
         }
     }

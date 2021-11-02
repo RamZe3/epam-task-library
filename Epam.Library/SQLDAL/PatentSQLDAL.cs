@@ -15,8 +15,8 @@ namespace Epam.Library.SQLDAL
     {
         private string _connectionString = @"Data Source=DESKTOP-SL9L2I0\SQLEXPRESS;Initial Catalog=Library;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        private AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL();
-        private AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL();
+        //private AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL();
+        //private AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL();
 
         public bool AddPatent(Patent patent)
         {
@@ -47,18 +47,31 @@ namespace Epam.Library.SQLDAL
                 //AddPatentCommand.Parameters.AddWithValue("@DateOfPublication", patent.DateOfPublication);
 
 
-                
-
-                foreach (var author in patent.Inventors)
-                {
-                    authorSQLDAL.AddAuthor(author);
-                    authorsForResources.AddResourceIDWithAuthorID(patent, author);
-                }
 
                 _connection.Open();
 
-                AddPatentCommand.ExecuteNonQuery();
+                SqlTransaction transaction = _connection.BeginTransaction("Add Book");
+                AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL(_connection, transaction);
+                AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL(_connection, transaction);
 
+                AddPatentCommand.Transaction = transaction;
+                try
+                {
+                    AddPatentCommand.ExecuteNonQuery();
+
+                    foreach (var author in patent.Inventors)
+                    {
+                        authorSQLDAL.AddAuthor(author);
+                        authorsForResources.AddResourceIDWithAuthorID(patent, author);
+                    }
+
+                    transaction.Commit();
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                }
+                
                 _connection.Close();
 
                 return true;
@@ -102,8 +115,31 @@ namespace Epam.Library.SQLDAL
                 //}
 
                 _connection.Open();
+                SqlTransaction transaction = _connection.BeginTransaction("Add Book");
+                AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL(_connection, transaction);
+                AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL(_connection, transaction);
 
-                AddPatentCommand.ExecuteNonQuery();
+                try
+                {
+                    AddPatentCommand.Transaction = transaction;
+
+                    AddPatentCommand.ExecuteNonQuery();
+
+                    authorSQLDAL.DeleteResourceID(patent.Id);
+
+                    foreach (var author in patent.Inventors)
+                    {
+                        authorSQLDAL.AddAuthor(author);
+                        authorsForResources.AddResourceIDWithAuthorID(patent, author);
+                        //authorSQLDAL.UpdateAuthor(author);
+                        //authorsForResources.UpdateResourceIDWithAuthorID(patent, author);
+                    }
+                    transaction.Commit();
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                }
 
                 _connection.Close();
 
@@ -123,7 +159,7 @@ namespace Epam.Library.SQLDAL
                 };
 
                 command.Parameters.AddWithValue("@ID", id);
-                authorsForResources.DeleteResourceIDWithAuthorID(id);
+                //authorsForResources.DeleteResourceIDWithAuthorID(id);
 
                 _connection.Open();
 

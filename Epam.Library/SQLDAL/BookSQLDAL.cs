@@ -15,11 +15,8 @@ namespace Epam.Library.SQLDAL
     {
         private string _connectionString = @"Data Source=DESKTOP-SL9L2I0\SQLEXPRESS;Initial Catalog=Library;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
 
-        private AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL();
-        private AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL();
         public bool AddBook(Book book)
         {
-
             using (var _connection = new SqlConnection(_connectionString))
             {
                 var stProc = "Books_AddBook";
@@ -43,18 +40,29 @@ namespace Epam.Library.SQLDAL
                 //command.Parameters.AddWithValue("@YearOfPublishing", new DateTime(book.YearOfPublishing, 1, 1));
                 command.Parameters.AddWithValue("@ISBN", book.ISBN);
 
-                
-
-                foreach (var author in book.Authors)
-                {
-                    authorSQLDAL.AddAuthor(author);
-                    authorsForResources.AddResourceIDWithAuthorID(book, author);
-                }
-
                 _connection.Open();
 
-                if(command.ExecuteNonQuery() == -1)
-                    Console.WriteLine("Ошибка");
+                SqlTransaction transaction = _connection.BeginTransaction("Add Book");
+                AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL(_connection, transaction);
+                AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL(_connection, transaction);
+                command.Transaction = transaction;
+
+                try
+                {
+                    command.ExecuteNonQuery();
+
+                    foreach (var author in book.Authors)
+                    {
+                        authorSQLDAL.AddAuthor(author);
+                        authorsForResources.AddResourceIDWithAuthorID(book, author);
+                    }
+
+                    transaction.Commit();
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                }
 
                 _connection.Close();
 
@@ -86,17 +94,32 @@ namespace Epam.Library.SQLDAL
                 //command.Parameters.AddWithValue("@YearOfPublishing", new DateTime(book.YearOfPublishing, 1, 1));
                 command.Parameters.AddWithValue("@ISBN", book.ISBN);
 
-
-
-                //foreach (var author in book.Authors)
-                //{
-                //    authorSQLDAL.AddAuthor(author);
-                //    authorsForResources.AddResourceIDWithAuthorID(book, author);
-                //}
-
                 _connection.Open();
 
-                command.ExecuteNonQuery();
+                SqlTransaction transaction = _connection.BeginTransaction("Update Book");
+                AuthorSQLDAL authorSQLDAL = new AuthorSQLDAL(_connection, transaction);
+                AuthorsForResourcesSQLDAL authorsForResources = new AuthorsForResourcesSQLDAL(_connection, transaction);
+                command.Transaction = transaction;
+
+                try
+                {
+                    command.ExecuteNonQuery();
+
+                    authorSQLDAL.DeleteResourceID(book.Id);
+
+                    foreach (var author in book.Authors)
+                    {
+                        authorSQLDAL.AddAuthor(author);
+                        authorsForResources.AddResourceIDWithAuthorID(book, author);
+                        //authorSQLDAL.UpdateAuthor(author);
+                        //authorsForResources.AddResourceIDWithAuthorID(book, author);
+                    }
+                    transaction.Commit();
+                }
+                catch(Exception ex)
+                {
+                    transaction.Rollback();
+                }
 
                 _connection.Close();
 
@@ -117,7 +140,7 @@ namespace Epam.Library.SQLDAL
 
                 command.Parameters.AddWithValue("@ID", id);
 
-                authorsForResources.DeleteResourceIDWithAuthorID(id);
+                //authorsForResources.DeleteResourceIDWithAuthorID(id);
 
                 _connection.Open();
 

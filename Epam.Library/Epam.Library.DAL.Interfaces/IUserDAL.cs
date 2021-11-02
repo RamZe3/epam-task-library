@@ -15,5 +15,6 @@ namespace Epam.Library.DAL.Interfaces
         bool DeleteRole(Guid id, string role);
         bool DeleteAllRoleForUser(Guid id, string role);
         User GetUser(string UserName, string UserPass);
+        List<User> GetUsers();
     }
 }

@@ -34,7 +34,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
 
         public bool DeletePatent(Guid id)
@@ -46,7 +46,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
 
         public bool UpdatePatent(Patent patent)
@@ -59,7 +59,7 @@ namespace Epam.Library.BLL.LogicWithRoles
             }
                 
             else
-                throw new Exception();
+                throw new LackOfUserRightsException(UserRollProvider.user.Name);
         }
     }
 }

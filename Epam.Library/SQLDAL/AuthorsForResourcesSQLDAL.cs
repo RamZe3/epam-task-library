@@ -10,12 +10,22 @@ namespace SQLDAL
 {
     public class AuthorsForResourcesSQLDAL
     {
-        private string _connectionString = @"Data Source=DESKTOP-SL9L2I0\SQLEXPRESS;Initial Catalog=Library;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        private SqlConnection _connection;
+        private SqlTransaction transaction;
+
+        public AuthorsForResourcesSQLDAL(SqlConnection connection, SqlTransaction transaction)
+        {
+            _connection = connection;
+            this.transaction = transaction;
+        }
+
+        public AuthorsForResourcesSQLDAL()
+        {
+        }
+
         public bool AddResourceIDWithAuthorID(InformationResource resource, Author author)
         {
-            using (var _connection = new SqlConnection(_connectionString))
-            {
-                var AddAuthorIDProc = "AuthorsForResources_AddAuthorID";
+                var AddAuthorIDProc = "AuthorsForResources_AddAuthorIDForResourceID";
                 var AddAuthorIDCommand = new SqlCommand(AddAuthorIDProc, _connection)
                 {
                     CommandType = System.Data.CommandType.StoredProcedure
@@ -26,21 +36,18 @@ namespace SQLDAL
                 AddAuthorIDCommand.Parameters.AddWithValue("@Name", author.Name);
                 AddAuthorIDCommand.Parameters.AddWithValue("@SurName", author.Surname);
 
-                _connection.Open();
-
+            //_connection.Open();
+                AddAuthorIDCommand.Transaction = transaction;
 
                 AddAuthorIDCommand.ExecuteNonQuery();
 
-                _connection.Close();
+                //_connection.Close();
 
                 return true;
-            }
         }
 
         public bool UpdateResourceIDWithAuthorID(Guid id)
         {
-            using (var _connection = new SqlConnection(_connectionString))
-            {
                 var AddAuthorIDProc = "AuthorsForResources_UpdateAuthorID";
                 var AddAuthorIDCommand = new SqlCommand(AddAuthorIDProc, _connection)
                 {
@@ -49,15 +56,16 @@ namespace SQLDAL
 
                 AddAuthorIDCommand.Parameters.AddWithValue("@AuthorID", id);
 
-                _connection.Open();
-
+                //_connection.Open();
+                AddAuthorIDCommand.Transaction = transaction;
 
                 AddAuthorIDCommand.ExecuteNonQuery();
 
-                _connection.Close();
+               // AddAuthorIDCommand.ExecuteNonQuery();
+
+                //_connection.Close();
 
                 return true;
-            }
         }
 
         public bool DeleteResourceIDWithAuthorID(Guid id)
