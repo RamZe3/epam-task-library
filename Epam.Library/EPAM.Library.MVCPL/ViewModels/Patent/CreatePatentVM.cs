@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace EPAM.Library.MVCPL.ViewModels.Patent
 {
     public class CreatePatentVM : IValidatableObject
     {
+        public Guid Id { get; set; }
         [Required]
         [StringLength(300)]
         public string Name { get; set; }
@@ -35,18 +37,15 @@ namespace EPAM.Library.MVCPL.ViewModels.Patent
         public DateTime DateOfPublication { get; set; }
 
         [Required]
-        public int CountOfAuthor { get; set; }
+        public string[] AuthorsId { get; set; }
+
+        public List<SelectListItem> AuthorsList { get; set; }
 
         public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
         {
             if (NumberOfPages < 0)
             {
                 yield return new ValidationResult("Число страниц должно быть положительным", new[] { nameof(NumberOfPages) });
-            }
-
-            if (CountOfAuthor < 0)
-            {
-                yield return new ValidationResult("Число авторов должно быть положительным", new[] { nameof(CountOfAuthor) });
             }
 
             if (RegistrationNumber >= 999999999)

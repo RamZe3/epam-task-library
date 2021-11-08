@@ -28,6 +28,7 @@ namespace Epam.Library.BLL
             if (dataValidationExceptions.Count != 0)
             {
                 return dataValidationExceptions;
+                _bookDAL.AddBook(book);
             }
             else
             {

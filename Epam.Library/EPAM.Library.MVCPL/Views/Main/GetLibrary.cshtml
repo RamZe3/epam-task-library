@@ -1,10 +1,36 @@
 ﻿@model EPAM.Library.MVCPL.ViewModels.Resource.DisplayResourceVM
-
+@using EPAM.Library.MVCPL.Helpers
 @{
     ViewBag.Title = "GetLibrary";
 }
 
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
 <h2>GetLibrary</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(model => model.NametoSearch, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NametoSearch, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NametoSearch, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <br />
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Find" class="btn btn-primary" />
+        </div>
+    </div>
+}
 
 <table class="table">
     <tr>
@@ -20,9 +46,13 @@
         <th></th>
     </tr>
 
-    @foreach(var resource in Model.Resources)
+    @foreach (var resource in Model.Resources)
     {
         @Html.Action("CreateRow", new { resource = resource })
     }
 
 </table>
+
+<div class="btn-group">
+    @Html.PageLinks(Model.PageInfo, x => Url.Action("GetLibrary", new { page = x }))
+</div>

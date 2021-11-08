@@ -1,11 +1,28 @@
 ﻿@model Epam.Library.Entities.Paper
+@using Epam.Library.Entities
+
+@functions{
+    public string GetName(Paper paper)
+    {
+        string Name = "";
+        if (paper.Number == -1)
+        {
+            Name += paper.Name + " " + paper.YearOfPublishing;
+        }
+        else
+        {
+            Name += String.Format("{0} №{1}/{2}", paper.Name, paper.Number, paper.YearOfPublishing);
+        }
+        return Name;
+    }
+}
 
 <tr>
     <td>
-        @Html.ActionLink(Model.Name, "Card", new { id = Model.Id })
+        @Html.ActionLink(GetName(Model), "Card", new { id = Model.Id })
     </td>
     <td>
-        @Html.DisplayFor(model => model.ISSN);
+        @Html.DisplayFor(model => model.ISSN)
     </td>
     <td>
         @Html.DisplayFor(model => model.NumberOfPages)

@@ -9,6 +9,7 @@ namespace EPAM.Library.MVCPL.ViewModels.User
     public class LoginUserVM
     {
         [Required]
+        [RegularExpression(@"(^[a-zA-Z]+([_]?[a-zA-Z0-9]+)+$)")]
         public string Name { get; set; }
 
         [Required]

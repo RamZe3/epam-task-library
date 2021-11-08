@@ -109,6 +109,7 @@
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
+    <Content Include="Logs\Logs.txt" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.esm.js" />
@@ -121,6 +122,8 @@
     <Content Include="Scripts\jquery-3.6.0.slim.js" />
     <Content Include="Scripts\jquery-3.6.0.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -135,27 +138,44 @@
     <Compile Include="App_Start\AutoMapperConfig.cs" />
     <Compile Include="App_Start\DependenciesResolverConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AuthorsController.cs" />
     <Compile Include="Controllers\BooksController.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Controllers\PapersController.cs" />
     <Compile Include="Controllers\PatentsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
+    <Compile Include="Filters\LoggerFilters\ActionLoggerAttribute.cs" />
+    <Compile Include="Filters\AdminActionLoggerAttribute.cs" />
+    <Compile Include="Filters\AuthenticationLoggerAttribute.cs" />
+    <Compile Include="Filters\LoggerFilters\AuthorizeLoggerAttribute.cs" />
+    <Compile Include="Filters\LoggerFilters\ExceptionLoggerAttribute.cs" />
+    <Compile Include="Filters\RegistrationLoggerAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AuthorsModel.cs" />
-    <Compile Include="Models\DisplayResourceVMAdapter.cs" />
-    <Compile Include="Models\MVCRoleProvider.cs" />
-    <Compile Include="Models\RolesForUsersModel.cs" />
+    <Compile Include="Helpers\PagingHelpers.cs" />
+    <Compile Include="Models\Authors\AuthorsModel.cs" />
+    <Compile Include="Models\Logs\Logger.cs" />
+    <Compile Include="Models\Logs\LogInfo.cs" />
+    <Compile Include="Models\Pages\PageInfo.cs" />
+    <Compile Include="Models\UserPassword\HashGenerator.cs" />
+    <Compile Include="Models\Roles\MVCRoleProvider.cs" />
+    <Compile Include="Models\PaperIssuue\PaperIssue.cs" />
+    <Compile Include="Models\PaperIssuue\PaperIssueLogic.cs" />
+    <Compile Include="Models\Roles\RolesForUsersModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\Author\CreateAuthorVM.cs" />
     <Compile Include="ViewModels\Book\CreateBookVM.cs" />
     <Compile Include="ViewModels\Book\DisplayCardBookVM.cs" />
+    <Compile Include="ViewModels\PaperIssue\CreatePaperIssueVM.cs" />
+    <Compile Include="ViewModels\PaperIssue\DisplayCardPaperIssueVM.cs" />
+    <Compile Include="ViewModels\PaperIssue\DisplayPaperIssueVM.cs" />
     <Compile Include="ViewModels\Paper\CreatePaperVM.cs" />
     <Compile Include="ViewModels\Paper\DisplayCardPaperVM.cs" />
     <Compile Include="ViewModels\Paper\EditPaperVM.cs" />
     <Compile Include="ViewModels\Patent\CreatePatentVM.cs" />
     <Compile Include="ViewModels\Patent\DisplayCardPatentVM.cs" />
+    <Compile Include="ViewModels\Resource\DisplayFindResourcesByNameVM.cs" />
     <Compile Include="ViewModels\Resource\DisplayResourceVM.cs" />
     <Compile Include="ViewModels\User\AddRoleVM.cs" />
     <Compile Include="ViewModels\User\CreateUserVM.cs" />
@@ -204,13 +224,23 @@
     <Content Include="Views\Main\Table\_RowBook.cshtml" />
     <Content Include="Views\Main\Table\_RowPatent.cshtml" />
     <Content Include="Views\Main\Table\_RowPaper.cshtml" />
-    <Content Include="Views\Main\Edit\_EditPaper.cshtml" />
+    <Content Include="Views\Main\Edit\__EditPaper.cshtml" />
     <Content Include="Views\Main\Edit.cshtml" />
-    <Content Include="Views\Main\Edit\EditPaper.cshtml" />
+    <Content Include="Views\Main\Edit\_EditPaper.cshtml" />
     <Content Include="Views\Users\Login.cshtml" />
     <Content Include="Views\Users\GetUsers.cshtml" />
     <Content Include="Views\Users\AddRole.cshtml" />
     <Content Include="Views\Users\DeleteRole.cshtml" />
+    <Content Include="Views\Authors\_TempAuthorPartial.cshtml" />
+    <Content Include="Views\Authors\_TempAddAuthorPartial.cshtml" />
+    <Content Include="Views\Users\View1.cshtml" />
+    <Content Include="Views\Papers\_RowPaperIssue.cshtml" />
+    <Content Include="Views\Papers\PICard.cshtml" />
+    <Content Include="Views\Papers\CreatePaperIssue.cshtml" />
+    <Content Include="Views\Main\Edit\_EditPatent.cshtml" />
+    <Content Include="Views\Papers\Edit.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Patents\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -220,6 +250,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\PaperIssue\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Epam.Library.BLL.Interfaces\Epam.Library.BLL.Interfaces.csproj">

@@ -1,6 +1,8 @@
 ﻿using Epam.Library.BLL.LogicWithRoles;
 using Epam.Library.Dependencies;
 using Epam.Library.Entities;
+using EPAM.Library.MVCPL.Filters;
+using EPAM.Library.MVCPL.Models;
 using EPAM.Library.MVCPL.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -11,21 +13,26 @@ using System.Web.Security;
 
 namespace EPAM.Library.MVCPL.Controllers
 {
+    [ExceptionLogger]
+    [AuthorizeLogger(Roles = "admin")]
     public class UsersController : Controller
     {
         // GET: Users
-
+        private HashGenerator hashGenerator = new HashGenerator();
         public ActionResult Index()
         {
             return View();
         }
 
+        [AllowAnonymous]
         public ActionResult Registration()
         {
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
+        
         public ActionResult Registration(CreateUserVM model)
         {
 
@@ -35,9 +42,10 @@ namespace EPAM.Library.MVCPL.Controllers
             {
                 if (!users.Any(u => u.Name == model.Name))
                 {
+                    model.Password = hashGenerator.ToSHA512(model.Password);
                     DependenciesResolverConfig.DependenciesResolver.UserRollProvider.AddUser(AutoMapperConfig.Mapper.Map<User>(model));
                     FormsAuthentication.SetAuthCookie(model.Name, createPersistentCookie: true);
-                    return RedirectToAction(nameof(Index), "Main");
+                    return RedirectToAction(nameof(SuccessfulRegistration));
 
                 }
                 else
@@ -50,12 +58,22 @@ namespace EPAM.Library.MVCPL.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        [ActionLogger("registration")]
+        public ActionResult SuccessfulRegistration()
+        {
+
+            return RedirectToAction(nameof(Index), "Main");
+        }
+
+        [AllowAnonymous]
         public ActionResult Login()
         {
 
             return View();
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(LoginUserVM model)
         {
@@ -63,10 +81,10 @@ namespace EPAM.Library.MVCPL.Controllers
 
             if (ModelState.IsValid)
             {
-                if (users.Any(u => u.Name == model.Name && u.Password == model.Password))
+                if (users.Any(u => u.Name == model.Name && u.Password == hashGenerator.ToSHA512(model.Password)))
                 {
                     FormsAuthentication.SetAuthCookie(model.Name, createPersistentCookie: true);
-                    return RedirectToAction(nameof(Index), "Main");
+                    return RedirectToAction(nameof(SuccessfulLogin));
                     
                 }
                 else
@@ -79,12 +97,22 @@ namespace EPAM.Library.MVCPL.Controllers
             return View(model);
         }
 
+        [AllowAnonymous]
+        [AuthenticationLogger]
+        public ActionResult SuccessfulLogin()
+        {
+            return RedirectToAction(nameof(Index), "Main");
+        }
+
+        [OverrideAuthorization]
+        [Authorize]
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
             return RedirectToAction(nameof(Index), "Main");
         }
 
+        [ActionLogger("action with admin roles")]
         public ActionResult GetUsers()
         {
             List<User> users = DependenciesResolverConfig.DependenciesResolver.UserRollProvider.GetUsers();
@@ -95,9 +123,11 @@ namespace EPAM.Library.MVCPL.Controllers
         public ActionResult AddRole(Guid id)
         {
             AddRoleVM addRoleVM = new AddRoleVM() { Id = id };
+            addRoleVM.Roles = new RolesForUsersModel().GetRolesForAdded();
             return View(addRoleVM);
         }
 
+        [ActionLogger("action with admin roles")]
         [HttpPost]
         public ActionResult AddRole(AddRoleVM model)
         {
@@ -114,6 +144,7 @@ namespace EPAM.Library.MVCPL.Controllers
         public ActionResult DeleteRole(Guid id)
         {
             DeleteRoleVM deleteRoleVM = new DeleteRoleVM() {Id = id };
+            deleteRoleVM.Roles = new RolesForUsersModel().GetRolesForDeleted(id);
             return View(deleteRoleVM);
         }
 
@@ -133,6 +164,12 @@ namespace EPAM.Library.MVCPL.Controllers
             }
 
             return View(model);
+        }
+
+        public ActionResult View1()
+        {
+
+            return View();
         }
     }
 }

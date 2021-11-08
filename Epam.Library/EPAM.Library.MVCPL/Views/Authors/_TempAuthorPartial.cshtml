@@ -1,0 +1,20 @@
+﻿@model EPAM.Library.MVCPL.ViewModels.Book.CreateBookVM
+@using EPAM.Library.MVCPL.Models
+
+@{
+    Guid id = Guid.NewGuid();
+    Guid buttonId = Guid.NewGuid();
+}
+
+<div id="@id">
+    @Html.DropDownList("AuthorsId[]", new AuthorsModel().GetSelectListItems())
+    <button id="@buttonId" type="reset">"X"</button>
+</div>
+
+<script>
+    $('#@buttonId').click(function () {
+        var elem = document.getElementById('@id');
+        elem.remove();
+        //location.href = '/Main/Create';
+    })
+</script>

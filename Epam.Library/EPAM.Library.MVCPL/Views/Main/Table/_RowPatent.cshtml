@@ -1,11 +1,21 @@
 ﻿@model Epam.Library.Entities.Patent
+@using Epam.Library.Entities
+
+@functions{
+    public string GetName(Patent patent)
+    {
+        string Name = "";
+        Name += String.Format("«{0}» от {1}", patent.Name, patent.DateOfPublication.ToString("d"));
+        return Name;
+    }
+}
 
 <tr style="background-color: aqua">
     <td>
-        @Html.ActionLink(Model.Name, "Card", new { id = Model.Id })
+        @Html.ActionLink(GetName(Model), "Card", new { id = Model.Id })
     </td>
     <td>
-        @Html.DisplayFor(model => model.Name)
+        @Html.DisplayFor(model => model.RegistrationNumber)
     </td>
     <td>
         @Html.DisplayFor(model => model.NumberOfPages)

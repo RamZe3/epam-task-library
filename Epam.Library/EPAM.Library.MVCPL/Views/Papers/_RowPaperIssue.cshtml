@@ -1,0 +1,11 @@
+﻿@model EPAM.Library.MVCPL.ViewModels.PaperIssue.DisplayPaperIssueVM
+
+
+<tr>
+    <td>
+        @Html.ActionLink(Model.Number.ToString(), "PICard", new { id = Model.Id })
+    </td>
+    <td>
+        @Html.DisplayFor(model => model.Date)
+    </td>
+</tr>

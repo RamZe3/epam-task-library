@@ -18,6 +18,21 @@ namespace Epam.Library.ConsolePL
 {
     class Program
     {
+        public static string ToSHA512(string s)
+        {
+            var sb = new StringBuilder();
+            using (var sha512 = SHA512.Create())
+            {
+                byte[] bytes = sha512.ComputeHash(Encoding.Unicode.GetBytes(s));
+
+                for (int i = 0; i < bytes.Length; i++)
+                {
+                    sb.Append(bytes[i].ToString("x2"));
+                }
+            }
+            return sb.ToString();
+        }
+
         static void Main(string[] args)
         {
 
@@ -249,25 +264,27 @@ namespace Epam.Library.ConsolePL
                 Console.WriteLine();
             }
 
-            byte[] data = Encoding.UTF8.GetBytes("12");
-            byte[] hash;
-            using (SHA512 shaM = new SHA512Managed())
-            {
-                hash = shaM.ComputeHash(data, 0, 16);
-            }
+            //byte[] data = Encoding.UTF8.GetBytes("12");
+            //byte[] hash;
+            //using (SHA512 shaM = new SHA512Managed())
+            //{
+            //    hash = shaM.ComputeHash(data, 0, 16);
+            //}
 
-            foreach (var item in hash)
-            {
-                Console.Write(item);
-            }
+            //foreach (var item in hash)
+            //{
+            //    Console.Write(item);
+            //}
 
-            Console.WriteLine();
-            using (SHA512 shaM = new SHA512Managed())
-            {
-                Console.WriteLine(shaM.HashSize);
-                byte[] hash1 = shaM.ComputeHash(Encoding.Default.GetBytes("123"));
-                Console.WriteLine(hash1);
-            }
+            //Console.WriteLine();
+            //using (SHA512 shaM = new SHA512Managed())
+            //{
+            //    Console.WriteLine(shaM.HashSize);
+            //    byte[] hash1 = shaM.ComputeHash(Encoding.Default.GetBytes("123"));
+            //    Console.WriteLine(hash1);
+            //}
+
+            Console.WriteLine("a1241506f047d977f6bf3a74c28fa79f7fd1cf100f8497ec87becdc8b1c6358634075e21a479429f9446e36c9937bcb9774efc9c532070768844a62789f4c696".Length);
             Console.ReadLine();
         }
     }

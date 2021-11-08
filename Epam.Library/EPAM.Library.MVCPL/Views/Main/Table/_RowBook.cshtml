@@ -1,8 +1,26 @@
 ﻿@model Epam.Library.Entities.Book
+@using Epam.Library.Entities
+
+@functions{
+    public string GetName(Book book)
+    {
+        string Name = "";
+        for (int i = 0; i < book.Authors.Count; i++)
+        {
+            Name += String.Format("{0}. {1}", book.Authors[i].Name[0], book.Authors[i].Surname);
+            if (i != book.Authors.Count-1)
+            {
+                Name += ", ";
+            }
+        }
+        Name+= String.Format("- {0} ({1})", book.Name, book.YearOfPublishing);
+        return Name;
+    }
+}
 
 <tr>
     <td>
-        @Html.ActionLink(Model.Name, "Card", new { id = Model.Id })
+        @Html.ActionLink(GetName(Model), "Card", new { id = Model.Id })
     </td>
     <td>
         @Html.DisplayFor(model => model.ISBN)

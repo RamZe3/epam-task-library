@@ -14,16 +14,71 @@
 
     <script src="~/Scripts/jquery-3.6.0.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 
     @if (User.Identity.IsAuthenticated)
     {
-        <h2>Hello, @User.Identity.Name</h2>
-        @Html.ActionLink("Logout", "Logout", "Users")
+        <div class="alert alert-success" role="alert">
+            Hello, @User.Identity.Name! @Html.ActionLink("Logout", "Logout", "Users")
+        </div>
     }
     else
     {
-        <h2>Hello, Guest</h2>
+        <div class="alert alert-success" role="alert">
+            Hello, Guest! @Html.ActionLink("Login", "Login", "Users") or @Html.ActionLink("Registration", "Registration", "Users")
+        </div>
     }
+
+    <button id="GetResources" type="button" class="btn btn-primary">GetResources</button>
+    <button id="GetUsers" type="button" class="btn btn-primary">GetUsers</button>
+
+    <br /><br />
+
+    @if (User.IsInRole("admin"))
+    {
+        <button id="AddBook" type="button" class="btn btn-primary">AddBook</button>
+        <button id="AddPaper" type="button" class="btn btn-primary">AddPaper</button>
+        <button id="AddPapaerIssue" type="button" class="btn btn-primary">AddPapaerIssue</button>
+        <button id="AddPatent" type="button" class="btn btn-primary">AddPatent</button>
+    }
+
+    <br /><br />
+
+    <script>
+        $('#GetResources').click(function () {
+            location.href = '/Main/GetLibrary';
+        })
+    </script>
+
+    <script>
+        $('#GetUsers').click(function () {
+            location.href = '/Users/GetUsers';
+        })
+    </script>
+
+    <script>
+        $('#AddBook').click(function () {
+            location.href = '/Books/Create';
+        })
+    </script>
+
+    <script>
+        $('#AddPaper').click(function () {
+            location.href = '/Papers/Create';
+        })
+    </script>
+
+    <script>
+        $('#AddPapaerIssue').click(function () {
+            location.href = '/Main/GetLibrary';
+        })
+    </script>
+
+    <script>
+        $('#AddPatent').click(function () {
+            location.href = '/Patents/Create';
+        })
+    </script>
 
     @RenderBody()
 

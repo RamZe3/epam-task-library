@@ -6,18 +6,24 @@ using System.Web;
 
 namespace EPAM.Library.MVCPL.ViewModels.User
 {
-    public class CreateUserVM
+    public class CreateUserVM : IValidatableObject
     {
         [Required]
+        [RegularExpression(@"(^[a-zA-Z]+([_]?[a-zA-Z0-9]+)+$)")]
         public string Name { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
+        [StringLength(int.MaxValue ,MinimumLength = 3)]
+        [RegularExpression(@"(^[ -�]+$)")]
         public string Password { get; set; }
 
-        //public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+        {
+            if (Name.ToLower() == Password.ToLower())
+            {
+                yield return new ValidationResult("Пароль не может быть логином", new[] { nameof(Password) });
+            }
+        }
     }
 }

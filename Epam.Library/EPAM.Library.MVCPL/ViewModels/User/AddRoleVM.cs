@@ -13,13 +13,7 @@ namespace EPAM.Library.MVCPL.ViewModels.User
         public Guid Id { get; set; }
 
         //[Required]
-        public List<SelectListItem> Roles => new RolesForUsersModel().GetRolesForAdded();
+        public List<SelectListItem> Roles { get; set; }
         public string Role { get; set; }
-
-        public AddRoleVM()
-        {
-            Roles.Add(new SelectListItem { Text = "Admin", Value = "admin"});
-            Roles.Add(new SelectListItem { Text = "Librarian", Value = "librarian", Selected = true});
-        }
     }
 }

@@ -19,80 +19,97 @@
             <dt>
                 @Html.DisplayNameFor(model => model.Name)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Name)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.NumberOfPages)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.NumberOfPages)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Note)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Note)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.PlaceOfPublication)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.PlaceOfPublication)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Publisher)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Publisher)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.YearOfPublishing)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.YearOfPublishing)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Number)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Number)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.Date)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.Date)
             </dd>
-    
+
             <dt>
                 @Html.DisplayNameFor(model => model.ISSN)
             </dt>
-    
+
             <dd>
                 @Html.DisplayFor(model => model.ISSN)
             </dd>
-    
+
         </dl>
     </div>
     <p>
         @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
         @Html.ActionLink("Back to List", "Index")
     </p>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayName("Number")
+            </th>
+            <th>
+                @Html.DisplayName("Date")
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var paperIssue in Model.PaperIssues)
+        {
+            @Html.Action("CreatePaperIssueRow", "Papers", paperIssue);
+        }
+    </table>
 </body>
 </html>

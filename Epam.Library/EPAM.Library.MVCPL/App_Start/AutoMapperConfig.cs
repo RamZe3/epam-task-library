@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using Epam.Library.Entities;
+using EPAM.Library.MVCPL.Models;
 using EPAM.Library.MVCPL.ViewModels.Author;
 using EPAM.Library.MVCPL.ViewModels.Book;
 using EPAM.Library.MVCPL.ViewModels.Paper;
+using EPAM.Library.MVCPL.ViewModels.PaperIssue;
 using EPAM.Library.MVCPL.ViewModels.Patent;
 using EPAM.Library.MVCPL.ViewModels.User;
 using System;
@@ -17,6 +19,8 @@ namespace EPAM.Library.MVCPL
         public static Mapper Mapper { get; private set; }
         public static void RegisterMaps()
         {
+            HashGenerator hashGenerator = new HashGenerator();
+
             var config = new MapperConfiguration(cfg =>
             {
                 //Create
@@ -27,13 +31,23 @@ namespace EPAM.Library.MVCPL
                 cfg.CreateMap<CreatePaperVM, Paper>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
+                cfg.CreateMap<EditPaperVM, Paper>();
+
                 cfg.CreateMap<CreateBookVM, Book>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Authors, opt => opt.Ignore());
 
+                cfg.CreateMap<Book, CreateBookVM>()
+                .ForMember(dest => dest.AuthorsId, opt => opt.Ignore())
+                .ForMember(dest => dest.AuthorsList, opt => opt.Ignore());
+
                 cfg.CreateMap<CreatePatentVM, Patent>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore())
                 .ForMember(dest => dest.Inventors, opt => opt.Ignore());
+
+                cfg.CreateMap<Patent, CreatePatentVM>()
+                .ForMember(dest => dest.AuthorsId, opt => opt.Ignore())
+                .ForMember(dest => dest.AuthorsList, opt => opt.Ignore());
 
                 cfg.CreateMap<CreateAuthorVM, Author>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
@@ -41,7 +55,8 @@ namespace EPAM.Library.MVCPL
                 //Card
                 cfg.CreateMap<Book, DisplayCardBookVM>();
 
-                cfg.CreateMap<Paper, DisplayCardPaperVM>();
+                cfg.CreateMap<Paper, DisplayCardPaperVM>()
+                .ForMember(dest => dest.PaperIssues, opt => opt.Ignore());
 
                 cfg.CreateMap<Patent, DisplayCardPatentVM>();
 
@@ -50,6 +65,9 @@ namespace EPAM.Library.MVCPL
 
                 //User
                 cfg.CreateMap<User, DisplayUserVM>();
+
+                cfg.CreateMap<PaperIssue, DisplayPaperIssueVM>();
+                cfg.CreateMap<PaperIssue, DisplayCardPaperIssueVM>();
             });
 
             Mapper = new Mapper(config);

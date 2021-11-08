@@ -1,0 +1,186 @@
+﻿@model EPAM.Library.MVCPL.ViewModels.Book.CreateBookVM
+@using EPAM.Library.MVCPL.Models
+@using EPAM.Library.MVCPL.ViewModels.Author
+
+@{
+    ViewBag.Title = "Create";
+    AuthorsModel authorsModel = new AuthorsModel();
+    CreateAuthorVM createAuthorVM = new CreateAuthorVM();
+}
+
+@section scripts {
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+}
+
+<div class="container">
+    <div class="row justify-content-center align-items-center">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <div class="alert alert-info row justify-content-center align-items-center" role="alert">
+                    Create Book
+                </div>
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NumberOfPages, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.NumberOfPages, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.NumberOfPages, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Note, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Note, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Note, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.PlaceOfPublication, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.PlaceOfPublication, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.PlaceOfPublication, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Publisher, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Publisher, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Publisher, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.YearOfPublishing, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.YearOfPublishing, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.YearOfPublishing, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ISBN, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.ISBN, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.ISBN, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <!--<div class="form-group">
+                @Html.LabelFor(model => model.AuthorsId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">-->
+                @*DropDownListFor*@
+                <!--@Html.ListBoxFor(model => model.AuthorsId, authorsModel.GetSelectListItems())
+                        @Html.ValidationMessageFor(model => model.AuthorsId, "", new { @class = "text-danger" })
+                    </div>
+                </div>-->
+
+
+
+                <div class="form-group" id="AuthorsList">
+                    @Html.LabelFor(model => model.AuthorsList, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        <div id="usersList">
+                            
+                                @Html.Action("GetAuthors", "Authors")
+                            
+
+
+
+                        </div>
+                        @Html.ValidationMessageFor(model => model.AuthorsList, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+
+            <br />
+        }
+
+
+        <hr />
+
+        <h2>AddAuthorToList</h2>
+
+        @using (Ajax.BeginForm("GetAuthors", "Authors", null, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "usersList", InsertionMode = InsertionMode.InsertBefore }))
+        {
+            <br />
+
+            <button type="submit" class="btn btn-success">AddAuthorToList</button>
+
+            <br />
+        }
+        @*@using (Ajax.BeginForm("AddAuthor", "Authors", new { Name = "name", Surname = "surname" }, new AjaxOptions { HttpMethod = "post" }))
+            {
+                @Html.AntiForgeryToken()
+                <input type="text" class="form-control" name="name" />
+                <input type="text" class="form-control" name="surname" />
+                <button type="submit" class="btn btn-success">Add Author</button>
+            }*@
+
+        <br />
+        <br />
+        <br />
+        <hr />
+
+        <h2>AddAuthorToDB</h2>
+
+        @using (Ajax.BeginForm("AddAuthor", "Authors", new { Name = "name", Surname = "surname" }, new AjaxOptions { HttpMethod = "post", UpdateTargetId = "usersList", InsertionMode = InsertionMode.Replace }))
+        {
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => createAuthorVM.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("name", new { htmlAttributes = new { @class = "form-control", name = createAuthorVM.Name } })
+                    @Html.ValidationMessageFor(model => createAuthorVM.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => createAuthorVM.Surname, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.Editor("surname", new { htmlAttributes = new { @class = "form-control", name = createAuthorVM.Surname } })
+                    @Html.ValidationMessageFor(model => createAuthorVM.Surname, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <br />
+
+            <button type="submit" class="btn btn-success">AddAuthorToDB</button>
+        }
+
+    </div>
+</div>
+
+@*<script>
+        $('#removeList').click(function () {
+            var id = document.getElementById("removeList").value;
+            var elem = document.getElementById(id);
+            //var elem = document.getElementById("usersList");
+            //var id = document.getElementById("removeList").value
+            elem.remove();
+            //location.href = '/Main/Create';
+        })
+    </script>*@
