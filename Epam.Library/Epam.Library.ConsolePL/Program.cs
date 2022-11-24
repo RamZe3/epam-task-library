@@ -244,7 +244,7 @@ namespace Epam.Library.ConsolePL
 
             foreach (var item in dependenciesResolver.InformationResourceLogic.GetLibrary())
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine(item.Name + "aaa" + "  " + item.GetType().Name);
             }
             Console.WriteLine();
 

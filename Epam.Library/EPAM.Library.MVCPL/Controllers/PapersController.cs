@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace EPAM.Library.MVCPL.Controllers
 {
+    [ExceptionLogger]
     [AuthorizeLogger(Roles = "admin, librarian")]
     public class PapersController : Controller
     {

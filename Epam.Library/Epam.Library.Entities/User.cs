@@ -54,5 +54,10 @@ namespace Epam.Library.Entities
         public User()
         {
         }
+
+        public User(string name)
+        {
+            Name = name;
+        }
     }
 }

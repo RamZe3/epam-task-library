@@ -11,7 +11,7 @@ using EPAM.Library.MVCPL.ViewModels.Book;
 
 namespace EPAM.Library.MVCPL.Controllers
 {
-    //[Authorize(Roles = "admin")]
+    [ExceptionLogger]
     [AuthorizeLogger(Roles = "admin, librarian")]
     public class BooksController : Controller
     {

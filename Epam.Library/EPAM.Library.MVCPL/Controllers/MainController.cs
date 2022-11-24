@@ -38,6 +38,7 @@ namespace EPAM.Library.MVCPL.Controllers
             return View(displayResourceVM);
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult GetLibrary(DisplayResourceVM displayResourceVM, int page = 1)
         {
@@ -109,15 +110,14 @@ namespace EPAM.Library.MVCPL.Controllers
             return View();
         }
 
-        [AuthorizeLogger(Roles = "admin")]
-        [ActionLogger("action with admin rights")]
+        [AuthorizeLogger(Roles = "admin, librarian")]
         public ActionResult Delete(Guid id)
         {
             DependenciesResolverConfig.DependenciesResolver.bookLogic.DeleteBook(id);
             return RedirectToAction(nameof(Index), "Main");
         }
 
-        [AuthorizeLogger(Roles = "admin")]
+        [AuthorizeLogger(Roles = "admin, librarian")]
         public ActionResult Edit(Guid id)
         {
 

@@ -98,7 +98,7 @@ namespace EPAM.Library.MVCPL.Controllers
         }
 
         [AllowAnonymous]
-        [AuthenticationLogger]
+        [ActionLogger("login")]
         public ActionResult SuccessfulLogin()
         {
             return RedirectToAction(nameof(Index), "Main");
